@@ -11,6 +11,7 @@ const AddRecipe = (props) => {
         ingredientsChange={props.ingredientsChange}
         index={index}
         ingredient={ingredient}
+        deleteInput={props.deleteInput}
       />
     );
   });
@@ -22,6 +23,7 @@ const AddRecipe = (props) => {
         methodChange={props.methodChange}
         index={index}
         step={step}
+        deleteInput={props.deleteInput}
       />
     );
   });

@@ -10,6 +10,7 @@ const IngredientInput = (props) => {
         onChange={props.ingredientsChange}
         data-index={props.index}
         value={props.ingredient}
+        autoComplete="off"
       />
       <div className={classes.PositionButtons}>
         <button type="button">
@@ -19,6 +20,7 @@ const IngredientInput = (props) => {
             height="16"
             fill="currentColor"
             viewBox="0 0 16 16"
+
           >
             <path
               fillRule="evenodd"
@@ -41,7 +43,14 @@ const IngredientInput = (props) => {
           </svg>
         </button>
       </div>
-      <button type="button">Delete</button>
+      <button
+        type="button"
+        data-index={props.index}
+        data-key="ingredients"
+        onClick={props.deleteInput}
+      >
+        Delete
+      </button>
     </li>
   );
 };

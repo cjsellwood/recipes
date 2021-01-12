@@ -10,6 +10,7 @@ const MethodInput = (props) => {
         onChange={props.methodChange}
         data-index={props.index}
         value={props.step}
+        autoComplete="off"
       />
       <div className={classes.PositionButtons}>
         <button type="button">
@@ -41,7 +42,14 @@ const MethodInput = (props) => {
           </svg>
         </button>
       </div>
-      <button type="button">Delete</button>
+      <button
+        type="button"
+        data-index={props.index}
+        data-key="method"
+        onClick={props.deleteInput}
+      >
+        Delete
+      </button>
     </li>
   );
 };

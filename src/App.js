@@ -14,7 +14,6 @@ const App = () => {
   const [method, setMethod] = useState([""]);
   const [recipes, setRecipes] = useState([]);
 
-
   useEffect(() => {
     const storedRecipes = localStorage.getItem("recipes");
     if (storedRecipes !== null) {
@@ -59,28 +58,8 @@ const App = () => {
     setMethod([...method, ""]);
   };
 
-  // Change ingredients state based on input from form
-  const methodChange = (e) => {
-    const index = e.target.getAttribute("data-index");
-    const ingredientsCopy = [...method];
-    ingredientsCopy[index] = e.target.value;
-    setMethod(ingredientsCopy);
-  };
-
-  const history = useHistory();
-
-
-  const saveRecipe = (e) => {
-    e.preventDefault();
-    const addedRecipe = {
-      name,
-      category,
-      time,
-      ingredients,
-      method,
-    };
-
-    // Duplicate recipes
+  // Duplicate recipes deeply
+  const duplicateRecipes = (recipes) => {
     const newRecipes = [];
     for (let i = 0; i < recipes.length; i++) {
       const recipeObj = {
@@ -92,6 +71,32 @@ const App = () => {
       };
       newRecipes.push(recipeObj);
     }
+    return newRecipes;
+  };
+
+  // Change ingredients state based on input from form
+  const methodChange = (e) => {
+    const index = e.target.getAttribute("data-index");
+    const ingredientsCopy = [...method];
+    ingredientsCopy[index] = e.target.value;
+    setMethod(ingredientsCopy);
+  };
+
+  const history = useHistory();
+
+  // Save to state when submitted
+  const saveRecipe = (e) => {
+    e.preventDefault();
+    const addedRecipe = {
+      name,
+      category,
+      time,
+      ingredients,
+      method,
+    };
+
+    // Duplicate recipes
+    const newRecipes = duplicateRecipes(recipes);
 
     // Add new recipe and add to local storage
     newRecipes.push(addedRecipe);
@@ -103,7 +108,30 @@ const App = () => {
     history.push("/");
   };
 
-  console.log(recipes);
+  // console.log(recipes);
+
+  // Delete added step from add recipe form
+  const deleteInput = (e) => {
+    const index = e.target.getAttribute("data-index");
+    const key = e.target.getAttribute("data-key");
+    console.log(key, index);
+    // const newRecipes = duplicateRecipes(recipes);
+
+    // Remove that one input and save recipes
+    // newRecipes[index][key].splice(index, 1);
+    // setRecipes(newRecipes);
+    if (key === "ingredients") {
+      const newIngredients = [...ingredients];
+      console.log(newIngredients)
+      newIngredients.splice(index, 1);
+      console.log(newIngredients)
+      setIngredients(newIngredients);
+    } else {
+      const newMethod = [...method];
+      newMethod.splice(index, 1);
+      setMethod(newMethod);
+    }
+  };
 
   return (
     <div className="App">
@@ -127,10 +155,11 @@ const App = () => {
             methodChange={methodChange}
             addMethodInput={addMethodInput}
             saveRecipe={saveRecipe}
+            deleteInput={deleteInput}
           />
         </Route>
         <Route path="/:id">
-          <Recipe recipes={recipes}/>
+          <Recipe recipes={recipes} />
         </Route>
       </Switch>
     </div>
