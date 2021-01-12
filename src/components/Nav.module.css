@@ -1,0 +1,57 @@
+.Navbar {
+  background-color: rgb(42, 42, 200);
+}
+
+.Navbar ul {
+  list-style: none;
+  display: grid;
+  align-items: center;
+  grid-template-columns: auto auto 1fr auto;
+  grid-template-rows: 50px;
+}
+
+@media (min-width: 600px) {
+  .Navbar ul {
+    padding-left: 100px;
+  }
+}
+
+.Navbar button {
+  font-size: 1.2rem;
+  padding: 0 20px;
+  height: 100%;
+  border: none;
+  outline: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.Navbar svg {
+  fill: white;
+}
+
+.Navbar li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.Navbar a {
+  color: white;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 0 20px;
+  font-size: 1.2rem;
+}
+
+.Navbar a:hover,
+.Navbar button:hover {
+  background-color: rgb(51, 99, 204);
+}

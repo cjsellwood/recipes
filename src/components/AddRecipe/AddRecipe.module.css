@@ -1,0 +1,45 @@
+.AddRecipe {
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: 0 auto;
+}
+
+@media (min-width: 600px) {
+  .AddRecipe {
+    width: 600px;
+  }
+}
+
+.AddRecipe h1 {
+  font-size: 1.6rem;
+  text-align: center;
+  font-weight: bold;
+  padding: 20px;
+}
+
+.AddRecipe input,
+.AddRecipe label {
+  margin: 5px 0;
+}
+
+.AddRecipe form {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.AddRecipe ul {
+  list-style: disc;
+  list-style-position: inside;
+}
+
+.AddRecipe ol {
+  list-style: decimal;
+  list-style-position: inside;
+}
+
+.PositionButtons {
+  display: inline-flex;
+}
