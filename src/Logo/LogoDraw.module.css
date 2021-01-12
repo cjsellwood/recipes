@@ -1,0 +1,63 @@
+.LogoDraw {
+  width: 512px;
+  height: 512px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background-color: #7fade0;
+}
+
+.Book {
+  background-color: rgb(224, 21, 21);
+  width: 60%;
+  height: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Book img {
+  width: 200px;
+}
+
+
+
+.LogoDraw div:not(:first-child) {
+  width: 40px;
+  height: 12px;
+  position: absolute;
+  left: 83px;
+  background-color: #fff;
+}
+
+.Binding1 {
+  top: 70px;
+}
+.Binding2 {
+  top: 110px;
+}.Binding3 {
+  top: 150px;
+}
+.Binding4 {
+  top: 190px;
+}
+.Binding5{
+  top: 230px;
+}
+.Binding6 {
+  top: 270px;
+}
+.Binding7 {
+  top: 310px;
+}
+
+.Binding8 {
+  top: 350px;
+}
+.Binding9 {
+  top: 390px;
+}
+.Binding10 {
+  top: 430px;
+}
