@@ -1,9 +1,10 @@
 import "./App.css";
 import Navbar from "./components/Nav";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, useHistory } from "react-router-dom";
 import Recipes from "./components/Recipes/Recipes";
 import AddRecipe from "./components/AddRecipe/AddRecipe";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import Recipe from "./components/Recipe/Recipe";
 
 const App = () => {
   const [name, setName] = useState("");
@@ -11,6 +12,15 @@ const App = () => {
   const [category, setCategory] = useState("");
   const [ingredients, setIngredients] = useState([""]);
   const [method, setMethod] = useState([""]);
+  const [recipes, setRecipes] = useState([]);
+
+
+  useEffect(() => {
+    const storedRecipes = localStorage.getItem("recipes");
+    if (storedRecipes !== null) {
+      setRecipes(JSON.parse(storedRecipes));
+    }
+  }, []);
 
   // Handle change in forms simple input values
   const formChange = (e) => {
@@ -44,18 +54,57 @@ const App = () => {
     setIngredients(ingredientsCopy);
   };
 
-    // Add new method step to list
-    const addMethodInput = () => {
-      setMethod([...method, ""]);
+  // Add new method step to list
+  const addMethodInput = () => {
+    setMethod([...method, ""]);
+  };
+
+  // Change ingredients state based on input from form
+  const methodChange = (e) => {
+    const index = e.target.getAttribute("data-index");
+    const ingredientsCopy = [...method];
+    ingredientsCopy[index] = e.target.value;
+    setMethod(ingredientsCopy);
+  };
+
+  const history = useHistory();
+
+
+  const saveRecipe = (e) => {
+    e.preventDefault();
+    const addedRecipe = {
+      name,
+      category,
+      time,
+      ingredients,
+      method,
     };
-  
-    // Change ingredients state based on input from form
-    const methodChange = (e) => {
-      const index = e.target.getAttribute("data-index");
-      const ingredientsCopy = [...method];
-      ingredientsCopy[index] = e.target.value;
-      setMethod(ingredientsCopy);
-    };
+
+    // Duplicate recipes
+    const newRecipes = [];
+    for (let i = 0; i < recipes.length; i++) {
+      const recipeObj = {
+        name: recipes[i].name,
+        category: recipes[i].category,
+        time: recipes[i].time,
+        ingredients: [...recipes[i].ingredients],
+        method: [...recipes[i].method],
+      };
+      newRecipes.push(recipeObj);
+    }
+
+    // Add new recipe and add to local storage
+    newRecipes.push(addedRecipe);
+    setRecipes(newRecipes);
+    localStorage.setItem("recipes", JSON.stringify(newRecipes));
+
+    // Redirect to home page
+
+    history.push("/");
+  };
+
+  console.log(recipes);
+
   return (
     <div className="App">
       <header>
@@ -63,7 +112,7 @@ const App = () => {
       </header>
       <Switch>
         <Route exact path="/">
-          <Recipes />
+          <Recipes recipes={recipes} />
         </Route>
         <Route path="/addrecipe">
           <AddRecipe
@@ -77,7 +126,11 @@ const App = () => {
             method={method}
             methodChange={methodChange}
             addMethodInput={addMethodInput}
+            saveRecipe={saveRecipe}
           />
+        </Route>
+        <Route path="/:id">
+          <Recipe recipes={recipes}/>
         </Route>
       </Switch>
     </div>

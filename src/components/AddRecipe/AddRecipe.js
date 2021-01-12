@@ -29,7 +29,7 @@ const AddRecipe = (props) => {
   return (
     <div className={classes.AddRecipe}>
       <h1 className={classes.MainHeading}>Add a New Recipe</h1>
-      <form>
+      <form onSubmit={props.saveRecipe}>
         <label>Name</label>
         <input
           type="text"

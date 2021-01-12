@@ -1,0 +1,31 @@
+.RecipeContainer {
+  display: grid;
+  border: 1px solid black;
+  text-decoration: none;
+  color: black;
+  margin: 10px 0;
+}
+
+.RecipeContainer h2 {
+  font-size: 1.4rem;
+  text-align: center;
+  font-weight: bold;
+  padding: 20px;
+}
+
+.RecipeContainer ul {
+  list-style: disc;
+  list-style-position: inside;
+}
+
+.RecipeContainer ol {
+  list-style: decimal;
+  list-style-position: inside;
+}
+
+.PageTitle {
+  font-size: 1.8rem;
+  text-align: center;
+  font-weight: bold;
+  padding: 20px;
+}
