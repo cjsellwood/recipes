@@ -1,6 +1,6 @@
 import "./App.css";
 import Navbar from "./components/Nav";
-import { Switch, Route, useHistory } from "react-router-dom";
+import { Switch, Route, useHistory, Redirect } from "react-router-dom";
 import Recipes from "./components/Recipes/Recipes";
 import AddRecipe from "./components/AddRecipe/AddRecipe";
 import React, { useState, useEffect } from "react";
@@ -39,7 +39,7 @@ const App = () => {
           setLoading(false);
         })
         .catch((error) => {
-          console.log(error);
+          console.error(error);
         });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -201,6 +201,9 @@ const App = () => {
             saveRecipe={saveRecipe}
             deleteInput={deleteInput}
           />
+        </Route>
+        <Route path="/recipes">
+          <Redirect to="/" />
         </Route>
         <Route path="/:id">
           <Recipe recipes={recipes} />
