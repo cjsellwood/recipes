@@ -183,10 +183,10 @@ const App = () => {
         <Navbar />
       </header>
       <Switch>
-        <Route exact path="/">
+        <Route exact path="/recipes">
           {loading ? <Spinner /> : <Recipes recipes={recipes} />}
         </Route>
-        <Route path="/addrecipe">
+        <Route path="/recipes/addrecipe">
           <AddRecipe
             name={name}
             category={category}
@@ -202,11 +202,11 @@ const App = () => {
             deleteInput={deleteInput}
           />
         </Route>
-        <Route path="/recipes">
-          <Redirect to="/" />
-        </Route>
-        <Route path="/:id">
+        <Route path="/recipes/:id">
           <Recipe recipes={recipes} />
+        </Route>
+        <Route path="/">
+          <Redirect to="/recipes" />
         </Route>
       </Switch>
     </div>
