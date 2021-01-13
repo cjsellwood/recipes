@@ -5,6 +5,7 @@ import Recipes from "./components/Recipes/Recipes";
 import AddRecipe from "./components/AddRecipe/AddRecipe";
 import React, { useState, useEffect } from "react";
 import Recipe from "./components/Recipe/Recipe";
+import Spinner from "./components/Spinner/Spinner";
 
 const App = () => {
   const [name, setName] = useState("");
@@ -13,11 +14,33 @@ const App = () => {
   const [ingredients, setIngredients] = useState([""]);
   const [method, setMethod] = useState([""]);
   const [recipes, setRecipes] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const storedRecipes = localStorage.getItem("recipes");
-    if (storedRecipes !== null) {
-      setRecipes(JSON.parse(storedRecipes));
+    // Retrieve recipes from local storage if stored there
+    // const storedRecipes = localStorage.getItem("recipes");
+    // if (storedRecipes !== null) {
+    //   setRecipes(JSON.parse(storedRecipes));
+    // }
+
+    // Retrieve from firebase on first load
+    if (recipes.length === 0) {
+      fetch("https://recipes-f31ef-default-rtdb.firebaseio.com/recipes.json")
+        .then((response) => {
+          return response.json();
+        })
+        .then((response) => {
+          const newRecipes = [];
+          const keys = Object.keys(response);
+          for (let i = 0; i < keys.length; i++) {
+            newRecipes.push(response[keys[i]]);
+          }
+          setRecipes(newRecipes);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   }, []);
 
@@ -98,10 +121,23 @@ const App = () => {
     // Duplicate recipes
     const newRecipes = duplicateRecipes(recipes);
 
-    // Add new recipe and add to local storage
+    // Add new recipe and add to firebase
     newRecipes.push(addedRecipe);
     setRecipes(newRecipes);
-    localStorage.setItem("recipes", JSON.stringify(newRecipes));
+    // localStorage.setItem("recipes", JSON.stringify(newRecipes));
+
+    fetch("https://recipes-f31ef-default-rtdb.firebaseio.com/recipes.json", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(addedRecipe),
+    })
+      .then((response) => response.json())
+      .then((data) => console.log("Success", data))
+      .catch((error) => {
+        console.log("Error: ", error);
+      });
 
     // Redirect to home page
 
@@ -122,9 +158,9 @@ const App = () => {
     // setRecipes(newRecipes);
     if (key === "ingredients") {
       const newIngredients = [...ingredients];
-      console.log(newIngredients)
+      console.log(newIngredients);
       newIngredients.splice(index, 1);
-      console.log(newIngredients)
+      console.log(newIngredients);
       setIngredients(newIngredients);
     } else {
       const newMethod = [...method];
@@ -133,6 +169,13 @@ const App = () => {
     }
   };
 
+  // #TODO
+  // Allow moving of ingredients and method in add recipe
+  // Redux
+  // Firebase
+  // Search maybe
+  // Styling
+
   return (
     <div className="App">
       <header>
@@ -140,7 +183,7 @@ const App = () => {
       </header>
       <Switch>
         <Route exact path="/">
-          <Recipes recipes={recipes} />
+          {loading ? <Spinner /> : <Recipes recipes={recipes} />}
         </Route>
         <Route path="/addrecipe">
           <AddRecipe
