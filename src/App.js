@@ -1,6 +1,6 @@
 import "./App.css";
 import Navbar from "./components/Nav";
-import { Switch, Route, useHistory, Redirect } from "react-router-dom";
+import { Switch, Route, useHistory } from "react-router-dom";
 import Recipes from "./components/Recipes/Recipes";
 import AddRecipe from "./components/AddRecipe/AddRecipe";
 import React, { useState, useEffect } from "react";
@@ -142,7 +142,7 @@ const App = () => {
       });
 
     // Redirect to home page
-    history.push("/recipes");
+    history.push("/");
   };
 
 
@@ -178,10 +178,10 @@ const App = () => {
         <Navbar />
       </header>
       <Switch>
-        <Route exact path="/recipes">
+        <Route exact path="/">
           {loading ? <Spinner /> : <Recipes recipes={recipes} />}
         </Route>
-        <Route path="/recipes/addrecipe">
+        <Route path="/addrecipe">
           <AddRecipe
             name={name}
             category={category}
@@ -197,11 +197,8 @@ const App = () => {
             deleteInput={deleteInput}
           />
         </Route>
-        <Route path="/recipes/:id">
+        <Route path="/:id">
           <Recipe recipes={recipes} />
-        </Route>
-        <Route path="/">
-          <Redirect to="/recipes" />
         </Route>
       </Switch>
     </div>

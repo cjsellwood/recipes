@@ -7,10 +7,10 @@ const Nav = () => {
     <nav className={classes.Navbar}>
       <ul>
         <li>
-          <Link to="/recipes/">Recipes</Link>
+          <Link to="/">Recipes</Link>
         </li>
         <li>
-          <Link to="/recipes/addrecipe">Add Recipe</Link>
+          <Link to="/addrecipe">Add Recipe</Link>
         </li>
         <li></li>
         <li>
