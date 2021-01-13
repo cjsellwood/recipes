@@ -110,6 +110,7 @@ const App = () => {
 
   // Save to state when submitted
   const saveRecipe = (e) => {
+    console.log(e)
     e.preventDefault();
     const addedRecipe = {
       name,
@@ -141,22 +142,15 @@ const App = () => {
       });
 
     // Redirect to home page
-
-    history.push("/");
+    history.push("/recipes");
   };
 
-  // console.log(recipes);
 
   // Delete added step from add recipe form
   const deleteInput = (e) => {
     const index = e.target.getAttribute("data-index");
     const key = e.target.getAttribute("data-key");
-    console.log(key, index);
-    // const newRecipes = duplicateRecipes(recipes);
 
-    // Remove that one input and save recipes
-    // newRecipes[index][key].splice(index, 1);
-    // setRecipes(newRecipes);
     if (key === "ingredients") {
       const newIngredients = [...ingredients];
       console.log(newIngredients);
@@ -173,9 +167,10 @@ const App = () => {
   // #TODO
   // Allow moving of ingredients and method in add recipe
   // Redux
-  // Firebase
   // Search maybe
   // Styling
+  // form validation
+  // stop inputs from pressing enter
 
   return (
     <div className="App">

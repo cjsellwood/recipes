@@ -31,7 +31,14 @@ const AddRecipe = (props) => {
   return (
     <div className={classes.AddRecipe}>
       <h1 className={classes.MainHeading}>Add a New Recipe</h1>
-      <form onSubmit={props.saveRecipe}>
+      <form
+        onSubmit={props.saveRecipe}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+          }
+        }}
+      >
         <label>Name</label>
         <input
           type="text"
@@ -62,11 +69,10 @@ const AddRecipe = (props) => {
           Add
         </button>
         <label>Method</label>
-        <ol>
-          {methodDisplay}
-
-        </ol>
-        <button type="button" onClick={props.addMethodInput}>Add</button>
+        <ol>{methodDisplay}</ol>
+        <button type="button" onClick={props.addMethodInput}>
+          Add
+        </button>
         <button type="submit">Save</button>
       </form>
     </div>
