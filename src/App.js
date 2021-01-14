@@ -1,4 +1,4 @@
-import "./App.css";
+import classes from "./App.module.css";
 import Navbar from "./components/Nav";
 import { Switch, Route, useHistory } from "react-router-dom";
 import Recipes from "./components/Recipes/Recipes";
@@ -30,6 +30,7 @@ const App = () => {
           return response.json();
         })
         .then((response) => {
+          console.log(response);
           const newRecipes = [];
           const keys = Object.keys(response);
           for (let i = 0; i < keys.length; i++) {
@@ -170,10 +171,9 @@ const App = () => {
   // Search maybe
   // Styling
   // form validation
-  // stop inputs from pressing enter
 
   return (
-    <div className="App">
+    <div className={classes.App}>
       <header>
         <Navbar />
       </header>

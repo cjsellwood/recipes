@@ -1,31 +1,79 @@
-.RecipeContainer {
+
+.RecipesContainer {
+}
+
+.RecipesContainer > div {
   display: grid;
-  border: 1px solid black;
+  grid-template-columns: 1fr;
+  row-gap: 10px;
+  column-gap: 10px;
+  padding: 10px;
+}
+
+@media (min-width: 600px) {
+  .RecipesContainer {
+    max-width: 80vw;
+    margin: 0 auto;
+  }
+
+  .RecipesContainer div {
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  }
+}
+
+.RecipeItem {
   text-decoration: none;
-  color: black;
-  margin: 10px 0;
+  color: rgb(240, 240, 240);
+  width: 100%;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  padding: 10px;
+  background-color: rgb(48, 49, 53);
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.664),
+    -2px 2px 3px rgba(0, 0, 0, 0.664);
+  outline: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  border: 1px solid transparent;
 }
 
-.RecipeContainer h2 {
-  font-size: 1.4rem;
-  text-align: center;
-  font-weight: bold;
-  padding: 20px;
+.RecipeItem::selection,
+.RecipeItem::-moz-selection {
+  background: rgb(80, 68, 253);
+  color: red;
 }
 
-.RecipeContainer ul {
-  list-style: disc;
-  list-style-position: inside;
+p::selection {
+  color: red;
 }
 
-.RecipeContainer ol {
-  list-style: decimal;
-  list-style-position: inside;
+@media (min-width: 600px) {
+  .RecipeItem:hover {
+    background-color: rgb(58, 59, 65);
+    border: 1px solid rgba(255, 255, 255, 0.507);
+  }
 }
 
-.PageTitle {
+.RecipesContainer h1 {
   font-size: 1.8rem;
   text-align: center;
   font-weight: bold;
   padding: 20px;
+  color: white;
+}
+
+
+.RecipeItem h2 {
+  font-size: 1.4rem;
+  text-align: center;
+  font-weight: bold;
+  padding: 10px;
+}
+
+.DetailsContainer {
+  display: flex;
+  padding: 5px;
+  justify-content: space-between;
 }
