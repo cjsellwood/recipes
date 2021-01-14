@@ -111,7 +111,7 @@ const App = () => {
 
   // Save to state when submitted
   const saveRecipe = (e) => {
-    console.log(e)
+    console.log(e);
     e.preventDefault();
     const addedRecipe = {
       name,
@@ -145,7 +145,6 @@ const App = () => {
     // Redirect to home page
     history.push("/");
   };
-
 
   // Delete added step from add recipe form
   const deleteInput = (e) => {
@@ -182,23 +181,27 @@ const App = () => {
           {loading ? <Spinner /> : <Recipes recipes={recipes} />}
         </Route>
         <Route path="/addrecipe">
-          <AddRecipe
-            name={name}
-            category={category}
-            time={time}
-            formChange={formChange}
-            ingredients={ingredients}
-            ingredientsChange={ingredientsChange}
-            addIngredientInput={addIngredientInput}
-            method={method}
-            methodChange={methodChange}
-            addMethodInput={addMethodInput}
-            saveRecipe={saveRecipe}
-            deleteInput={deleteInput}
-          />
+          {loading ? (
+            <Spinner />
+          ) : (
+            <AddRecipe
+              name={name}
+              category={category}
+              time={time}
+              formChange={formChange}
+              ingredients={ingredients}
+              ingredientsChange={ingredientsChange}
+              addIngredientInput={addIngredientInput}
+              method={method}
+              methodChange={methodChange}
+              addMethodInput={addMethodInput}
+              saveRecipe={saveRecipe}
+              deleteInput={deleteInput}
+            />
+          )}
         </Route>
         <Route path="/:id">
-          <Recipe recipes={recipes} />
+          {loading ? <Spinner /> : <Recipe recipes={recipes} />}
         </Route>
       </Switch>
     </div>

@@ -13,14 +13,18 @@ const Recipe = (props) => {
   } else {
     return (
       <section className={classes.Recipe}>
-        <h2>{props.recipes[index].name}</h2>
-        <p>{props.recipes[index].category}</p>
-        <p>{props.recipes[index].time}</p>
+        <h1>{props.recipes[index].name}</h1>
+        <div className={classes.DetailsContainer}>
+          <p>{props.recipes[index].category}</p>
+          <p>{props.recipes[index].time} Min</p>
+        </div>
+        <h2>Ingredients</h2>
         <ul>
           {props.recipes[index].ingredients.map((ingredient, index) => (
             <li key={index}>{ingredient}</li>
           ))}
         </ul>
+        <h2>Method</h2>
         <ol>
           {props.recipes[index].method.map((step, index) => (
             <li key={index}>{step}</li>

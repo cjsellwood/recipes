@@ -1,5 +1,13 @@
-
 .RecipesContainer {
+}
+
+.RecipesContainer h1 {
+  font-size: 1.8rem;
+  text-align: center;
+  font-weight: bold;
+  padding: 20px;
+  color: white;
+  text-shadow: 1px 1px 1px rgb(0, 0, 0);
 }
 
 .RecipesContainer > div {
@@ -39,16 +47,6 @@
   border: 1px solid transparent;
 }
 
-.RecipeItem::selection,
-.RecipeItem::-moz-selection {
-  background: rgb(80, 68, 253);
-  color: red;
-}
-
-p::selection {
-  color: red;
-}
-
 @media (min-width: 600px) {
   .RecipeItem:hover {
     background-color: rgb(58, 59, 65);
@@ -56,19 +54,10 @@ p::selection {
   }
 }
 
-.RecipesContainer h1 {
-  font-size: 1.8rem;
-  text-align: center;
-  font-weight: bold;
-  padding: 20px;
-  color: white;
-}
-
-
 .RecipeItem h2 {
   font-size: 1.4rem;
   text-align: center;
-  font-weight: bold;
+  text-shadow: 1px 1px 1px rgb(0, 0, 0);
   padding: 10px;
 }
 
@@ -76,4 +65,5 @@ p::selection {
   display: flex;
   padding: 5px;
   justify-content: space-between;
+  color: rgb(200, 200, 200);
 }
