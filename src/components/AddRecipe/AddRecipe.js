@@ -1,9 +1,14 @@
-import React from "react";
+import React, {useEffect} from "react";
 import classes from "./AddRecipe.module.css";
 import IngredientInput from "../IngredientInput/IngredientInput";
 import MethodInput from "../MethodInput/MethodInput";
 
+
 const AddRecipe = (props) => {
+
+  useEffect(() => {
+    props.resetForm();
+  }, [])
   const ingredientsDisplay = props.ingredients.map((ingredient, index) => {
     return (
       <IngredientInput

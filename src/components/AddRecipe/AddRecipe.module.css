@@ -1,9 +1,11 @@
 .AddRecipe {
-  width: 80%;
+  width: 100%;
   display: flex;
   justify-content: center;
   flex-direction: column;
   margin: 0 auto;
+  color: rgb(240, 240, 240);
+  padding: 20px;
 }
 
 @media (min-width: 600px) {
@@ -13,10 +15,11 @@
 }
 
 .AddRecipe h1 {
-  font-size: 1.6rem;
+  text-shadow: 1px 1px 1px rgb(0, 0, 0);
   text-align: center;
-  font-weight: bold;
-  padding: 20px;
+  font-size: 1.7rem;
+  text-transform: capitalize;
+  padding: 5px;
 }
 
 .AddRecipe input,

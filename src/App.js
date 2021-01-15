@@ -16,6 +16,7 @@ const App = () => {
   const [method, setMethod] = useState([""]);
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [dataFetched, setDataFetched] = useState(false);
 
   useEffect(() => {
     // Retrieve recipes from local storage if stored there
@@ -25,13 +26,13 @@ const App = () => {
     // }
 
     // Retrieve from firebase on first load
-    if (recipes.length === 0) {
+    if (!dataFetched) {
       fetch("https://recipes-f31ef-default-rtdb.firebaseio.com/recipes.json")
         .then((response) => {
           return response.json();
         })
         .then((response) => {
-          console.log(response);
+          console.log("fetched", response);
           const newRecipes = [];
           const keys = Object.keys(response);
           for (let i = 0; i < keys.length; i++) {
@@ -40,6 +41,7 @@ const App = () => {
           setRecipes(newRecipes);
 
           setLoading(false);
+          setDataFetched(true);
         })
         .catch((error) => {
           console.error(error);
@@ -116,7 +118,6 @@ const App = () => {
 
   // Save to state when submitted
   const saveRecipe = (e) => {
-    console.log(e);
     e.preventDefault();
     const addedRecipe = {
       name,
@@ -169,10 +170,44 @@ const App = () => {
     }
   };
 
+  // Reset edit form when first going to add recipe page
+  const resetForm = () => {
+    setName("");
+    setCategory("");
+    setTime("");
+    setIngredients([""]);
+    setMethod([""]);
+  };
+
+  // Add values to states for form editing from recipes at index of editing
   const editFormFill = (index) => {
     setName(recipes[index].name);
     setCategory(recipes[index].category);
     setTime(recipes[index].time);
+    setIngredients([...recipes[index].ingredients]);
+    setMethod([...recipes[index].method]);
+  };
+
+  const saveEditedRecipe = (e, index) => {
+    e.preventDefault();
+    const addedRecipe = {
+      name,
+      category,
+      time,
+      ingredients,
+      method,
+    };
+
+    // Duplicate recipes
+    const newRecipes = duplicateRecipes(recipes);
+
+    // Replace unedited with new values
+    newRecipes.splice(index, 1, addedRecipe)
+    setRecipes(newRecipes);
+    
+
+    // Redirect to home page
+    history.push("/");
   };
 
   // #TODO
@@ -208,6 +243,7 @@ const App = () => {
               addMethodInput={addMethodInput}
               saveRecipe={saveRecipe}
               deleteInput={deleteInput}
+              resetForm={resetForm}
             />
           )}
         </Route>
@@ -222,6 +258,14 @@ const App = () => {
               category={category}
               time={time}
               formChange={formChange}
+              ingredients={ingredients}
+              ingredientsChange={ingredientsChange}
+              addIngredientInput={addIngredientInput}
+              method={method}
+              methodChange={methodChange}
+              addMethodInput={addMethodInput}
+              saveEditedRecipe={saveEditedRecipe}
+              deleteInput={deleteInput}
             />
           )}
         </Route>

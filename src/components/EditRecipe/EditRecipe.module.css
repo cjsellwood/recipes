@@ -1,6 +1,10 @@
 .EditRecipe {
   color: rgb(240, 240, 240);
   padding: 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: 0 auto;
 }
 
 .EditRecipe h1 {
@@ -10,3 +14,31 @@
   text-transform: capitalize;
   padding: 5px;
 }
+
+@media (min-width: 600px) {
+  .EditRecipe {
+    width: 600px;
+  }
+}
+
+.EditRecipe input,
+.EditRecipe label {
+  margin: 5px 0;
+}
+
+.EditRecipe form {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.EditRecipe ul {
+  list-style: disc;
+  list-style-position: inside;
+}
+
+.EditRecipe ol {
+  list-style: decimal;
+  list-style-position: inside;
+}
+
