@@ -34,9 +34,11 @@ const App = () => {
         .then((response) => {
           console.log("fetched", response);
           const newRecipes = [];
-          const keys = Object.keys(response);
-          for (let i = 0; i < keys.length; i++) {
-            newRecipes.push({ ...response[keys[i]], key: keys[i] });
+          if (response === null) {
+            return;
+          }
+          for (let key in response) {
+            newRecipes.push({ ...response[key] });
           }
           setRecipes(newRecipes);
 
@@ -54,7 +56,6 @@ const App = () => {
 
   // Handle change in forms simple input values
   const formChange = (e) => {
-    console.log(e);
     const name = e.target.name;
     const value = e.target.value;
     switch (name) {
@@ -119,12 +120,16 @@ const App = () => {
   // Save to state when submitted
   const saveRecipe = (e) => {
     e.preventDefault();
+
+    // Set unique id for referencing in other uses
+    const id = Date.now();
     const addedRecipe = {
       name,
       category,
       time,
       ingredients,
       method,
+      id,
     };
 
     // Duplicate recipes
@@ -135,13 +140,17 @@ const App = () => {
     setRecipes(newRecipes);
     // localStorage.setItem("recipes", JSON.stringify(newRecipes));
 
-    fetch("https://recipes-f31ef-default-rtdb.firebaseio.com/recipes.json", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(addedRecipe),
-    })
+    // Add to firebase database
+    fetch(
+      `https://recipes-f31ef-default-rtdb.firebaseio.com/recipes/${id}.json`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(addedRecipe),
+      }
+    )
       .then((response) => response.json())
       .then((data) => console.log("Success", data))
       .catch((error) => {
@@ -196,15 +205,32 @@ const App = () => {
       time,
       ingredients,
       method,
+      id: recipes[index].id,
     };
 
     // Duplicate recipes
     const newRecipes = duplicateRecipes(recipes);
 
     // Replace unedited with new values
-    newRecipes.splice(index, 1, addedRecipe)
+    newRecipes.splice(index, 1, addedRecipe);
     setRecipes(newRecipes);
-    
+
+    // Add to firebase database
+    fetch(
+      `https://recipes-f31ef-default-rtdb.firebaseio.com/recipes/${recipes[index].id}.json`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(addedRecipe),
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => console.log("Success", data))
+      .catch((error) => {
+        console.log("Error: ", error);
+      });
 
     // Redirect to home page
     history.push("/");

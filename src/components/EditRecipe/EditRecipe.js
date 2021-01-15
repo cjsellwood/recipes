@@ -11,6 +11,7 @@ const EditRecipe = (props) => {
 
   useEffect(() => {
     props.editFormFill(index);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const ingredientsDisplay = props.ingredients.map((ingredient, index) => {
