@@ -6,6 +6,7 @@ import AddRecipe from "./components/AddRecipe/AddRecipe";
 import React, { useState, useEffect } from "react";
 import Recipe from "./components/Recipe/Recipe";
 import Spinner from "./components/Spinner/Spinner";
+import EditRecipe from "./components/EditRecipe/EditRecipe";
 
 const App = () => {
   const [name, setName] = useState("");
@@ -34,9 +35,10 @@ const App = () => {
           const newRecipes = [];
           const keys = Object.keys(response);
           for (let i = 0; i < keys.length; i++) {
-            newRecipes.push(response[keys[i]]);
+            newRecipes.push({ ...response[keys[i]], key: keys[i] });
           }
           setRecipes(newRecipes);
+
           setLoading(false);
         })
         .catch((error) => {
@@ -46,8 +48,11 @@ const App = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  console.log("recipes", recipes);
+
   // Handle change in forms simple input values
   const formChange = (e) => {
+    console.log(e);
     const name = e.target.name;
     const value = e.target.value;
     switch (name) {
@@ -164,6 +169,12 @@ const App = () => {
     }
   };
 
+  const editFormFill = (index) => {
+    setName(recipes[index].name);
+    setCategory(recipes[index].category);
+    setTime(recipes[index].time);
+  };
+
   // #TODO
   // Allow moving of ingredients and method in add recipe
   // Redux
@@ -197,6 +208,20 @@ const App = () => {
               addMethodInput={addMethodInput}
               saveRecipe={saveRecipe}
               deleteInput={deleteInput}
+            />
+          )}
+        </Route>
+        <Route path="/edit/:id">
+          {loading ? (
+            <Spinner />
+          ) : (
+            <EditRecipe
+              editFormFill={editFormFill}
+              recipes={recipes}
+              name={name}
+              category={category}
+              time={time}
+              formChange={formChange}
             />
           )}
         </Route>

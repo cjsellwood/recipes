@@ -50,3 +50,15 @@
   font-size: 1.2rem;
   line-height: 1.2;
 }
+
+.Recipe a {
+  display: block;
+  padding: 10px 20px;
+  margin: 0 auto;
+  margin-top: 50px;
+  color: white;
+  background-color: rgb(238, 85, 85);
+  text-decoration: none;
+  text-transform: uppercase;
+  width: fit-content;
+}

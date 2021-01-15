@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./Recipe.module.css";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 
 const Recipe = (props) => {
   const location = useLocation();
@@ -30,6 +30,7 @@ const Recipe = (props) => {
             <li key={index}>{step}</li>
           ))}
         </ol>
+        <Link to={`/edit/${index}`}>Edit</Link>
       </section>
     );
   }
