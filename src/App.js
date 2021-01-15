@@ -1,5 +1,5 @@
 import classes from "./App.module.css";
-import Navbar from "./components/Nav";
+import Nav from "./components/Nav/Nav";
 import { Switch, Route, useHistory } from "react-router-dom";
 import Recipes from "./components/Recipes/Recipes";
 import AddRecipe from "./components/AddRecipe/AddRecipe";
@@ -51,8 +51,6 @@ const App = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  console.log("recipes", recipes);
 
   // Handle change in forms simple input values
   const formChange = (e) => {
@@ -162,9 +160,10 @@ const App = () => {
   };
 
   // Delete added step from add recipe form
-  const deleteInput = (e) => {
+  const deleteListInput = (e) => {
     const index = e.target.getAttribute("data-index");
     const key = e.target.getAttribute("data-key");
+    console.log(e);
 
     if (key === "ingredients") {
       const newIngredients = [...ingredients];
@@ -243,10 +242,12 @@ const App = () => {
   // Styling
   // form validation
 
+  // console.log("recipes", recipes);
+
   return (
     <div className={classes.App}>
       <header>
-        <Navbar />
+        <Nav />
       </header>
       <Switch>
         <Route exact path="/">
@@ -268,7 +269,7 @@ const App = () => {
               methodChange={methodChange}
               addMethodInput={addMethodInput}
               saveRecipe={saveRecipe}
-              deleteInput={deleteInput}
+              deleteListInput={deleteListInput}
               resetForm={resetForm}
             />
           )}
@@ -291,7 +292,7 @@ const App = () => {
               methodChange={methodChange}
               addMethodInput={addMethodInput}
               saveEditedRecipe={saveEditedRecipe}
-              deleteInput={deleteInput}
+              deleteListInput={deleteListInput}
             />
           )}
         </Route>

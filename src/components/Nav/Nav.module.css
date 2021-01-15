@@ -1,9 +1,8 @@
-.Navbar {
+.Nav {
   background-color: rgb(56, 74, 230);
 }
 
-.Navbar ul {
-  list-style: none;
+.Nav ul {
   display: grid;
   align-items: center;
   grid-template-columns: auto auto 1fr auto;
@@ -11,12 +10,12 @@
 }
 
 @media (min-width: 600px) {
-  .Navbar ul {
+  .Nav ul {
     padding-left: 100px;
   }
 }
 
-.Navbar button {
+.Nav button {
   font-size: 1.2rem;
   padding: 0 20px;
   height: 100%;
@@ -29,18 +28,18 @@
   cursor: pointer;
 }
 
-.Navbar svg {
+.Nav svg {
   fill: white;
 }
 
-.Navbar li {
+.Nav li {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100%;
 }
 
-.Navbar a {
+.Nav a {
   color: white;
   text-decoration: none;
   display: flex;
@@ -51,7 +50,7 @@
   font-size: 1.2rem;
 }
 
-.Navbar a:hover,
-.Navbar button:hover {
+.Nav a:hover,
+.Nav button:hover {
   background-color: rgb(51, 99, 204);
 }

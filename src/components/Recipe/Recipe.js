@@ -1,6 +1,7 @@
 import React from "react";
 import classes from "./Recipe.module.css";
 import { useLocation, Link } from "react-router-dom";
+import PageTitle from "../PageTitle/PageTitle";
 
 const Recipe = (props) => {
   const location = useLocation();
@@ -13,7 +14,7 @@ const Recipe = (props) => {
   } else {
     return (
       <section className={classes.Recipe}>
-        <h1>{props.recipes[index].name}</h1>
+        <PageTitle>{props.recipes[index].name}</PageTitle>
         <div className={classes.DetailsContainer}>
           <p>{props.recipes[index].category}</p>
           <p>{props.recipes[index].time} Min</p>

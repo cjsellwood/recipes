@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import classes from "./EditRecipe.module.css";
-import IngredientInput from "../IngredientInput/IngredientInput";
-import MethodInput from "../MethodInput/MethodInput";
+
+import ListInput from "../ListInput/ListInput";
+import PageTitle from "../PageTitle/PageTitle";
 
 const EditRecipe = (props) => {
   const location = useLocation();
@@ -16,31 +17,33 @@ const EditRecipe = (props) => {
 
   const ingredientsDisplay = props.ingredients.map((ingredient, index) => {
     return (
-      <IngredientInput
+      <ListInput
         key={index}
-        ingredientsChange={props.ingredientsChange}
+        changeHandler={props.ingredientsChange}
         index={index}
-        ingredient={ingredient}
-        deleteInput={props.deleteInput}
+        name={ingredient}
+        deleteListInput={props.deleteListInput}
+        listName="ingredients"
       />
     );
   });
 
   const methodDisplay = props.method.map((step, index) => {
     return (
-      <MethodInput
+      <ListInput
         key={index}
-        methodChange={props.methodChange}
+        changeHandler={props.methodChange}
         index={index}
-        step={step}
-        deleteInput={props.deleteInput}
+        name={step}
+        deleteListInput={props.deleteListInput}
+        listName="method"
       />
     );
   });
 
   return (
     <div className={classes.EditRecipe}>
-      <h1>Edit Recipe</h1>
+      <PageTitle>Edit Recipe</PageTitle>
       <form
         onSubmit={(e) => props.saveEditedRecipe(e, index)}
         onKeyDown={(e) => {

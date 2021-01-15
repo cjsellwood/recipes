@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Nav = () => {
   return (
-    <nav className={classes.Navbar}>
+    <nav className={classes.Nav}>
       <ul>
         <li>
           <Link to="/">Recipes</Link>

@@ -1,6 +1,7 @@
 import React from "react";
 import classes from "./Recipes.module.css";
 import { Link } from "react-router-dom";
+import PageTitle from "../PageTitle/PageTitle";
 
 const Recipes = (props) => {
   const recipesDisplay = props.recipes.map((recipe, index) => {
@@ -17,7 +18,7 @@ const Recipes = (props) => {
 
   return (
     <section className={classes.RecipesContainer}>
-      <h1>Recipes</h1>
+      <PageTitle>Recipes</PageTitle>
       <div>{recipesDisplay}</div>
     </section>
   );

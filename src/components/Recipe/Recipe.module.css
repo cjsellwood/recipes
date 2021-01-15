@@ -11,16 +11,6 @@
   }
 }
 
-.Recipe h1 {
-  text-align: center;
-  font-size: 1.7rem;
-  text-transform: capitalize;
-  padding: 5px;
-  width: 100%;
-  text-shadow: 1px 1px 1px rgb(0, 0, 0);
-  border-bottom: 1px solid rgb(240, 240, 240);
-}
-
 .Recipe h2 {
   padding: 10px 0;
   margin-top: 5px;
@@ -34,6 +24,7 @@
   justify-content: space-between;
   font-size: 1.1rem;
   color: rgb(200, 200, 200);
+  border-top: 1px solid rgb(240, 240, 240);
 }
 
 .Recipe ul {

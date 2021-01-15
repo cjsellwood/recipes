@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import classes from "./AddRecipe.module.css";
-import IngredientInput from "../IngredientInput/IngredientInput";
-import MethodInput from "../MethodInput/MethodInput";
+import PageTitle from "../PageTitle/PageTitle";
+import ListInput from "../ListInput/ListInput";
+import Button from "../Button/Button";
 
 const AddRecipe = (props) => {
   useEffect(() => {
@@ -10,31 +11,33 @@ const AddRecipe = (props) => {
   }, []);
   const ingredientsDisplay = props.ingredients.map((ingredient, index) => {
     return (
-      <IngredientInput
+      <ListInput
         key={index}
-        ingredientsChange={props.ingredientsChange}
+        changeHandler={props.ingredientsChange}
         index={index}
-        ingredient={ingredient}
-        deleteInput={props.deleteInput}
+        name={ingredient}
+        deleteListInput={props.deleteListInput}
+        listName="ingredients"
       />
     );
   });
 
   const methodDisplay = props.method.map((step, index) => {
     return (
-      <MethodInput
+      <ListInput
         key={index}
-        methodChange={props.methodChange}
+        changeHandler={props.methodChange}
         index={index}
-        step={step}
-        deleteInput={props.deleteInput}
+        name={step}
+        deleteListInput={props.deleteListInput}
+        listName="method"
       />
     );
   });
 
   return (
     <div className={classes.AddRecipe}>
-      <h1 className={classes.MainHeading}>Add a New Recipe</h1>
+      <PageTitle>Add Recipe</PageTitle>
       <form
         onSubmit={props.saveRecipe}
         onKeyDown={(e) => {
@@ -69,15 +72,25 @@ const AddRecipe = (props) => {
         />
         <label>Ingredients</label>
         <ul>{ingredientsDisplay}</ul>
-        <button type="button" onClick={props.addIngredientInput}>
+        <Button
+          type="button"
+          btnStyle="Add"
+          clickHandler={props.addIngredientInput}
+        >
           Add
-        </button>
+        </Button>
         <label>Method</label>
         <ol>{methodDisplay}</ol>
-        <button type="button" onClick={props.addMethodInput}>
+        <Button
+          type="button"
+          btnStyle="Add"
+          clickHandler={props.addMethodInput}
+        >
           Add
-        </button>
-        <button type="submit">Save</button>
+        </Button>
+        <Button type="submit" btnStyle="Save">
+          Save
+        </Button>
       </form>
     </div>
   );

@@ -14,14 +14,6 @@
   }
 }
 
-.AddRecipe h1 {
-  text-shadow: 1px 1px 1px rgb(0, 0, 0);
-  text-align: center;
-  font-size: 1.7rem;
-  text-transform: capitalize;
-  padding: 5px;
-}
-
 .AddRecipe input,
 .AddRecipe label {
   margin: 5px 0;
@@ -36,6 +28,10 @@
 .AddRecipe ul {
   list-style: disc;
   list-style-position: inside;
+}
+
+.AddRecipe li ::marker {
+  margin: 0;
 }
 
 .AddRecipe ol {
