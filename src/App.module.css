@@ -6,3 +6,8 @@ body {
   background-color: rgb(66, 66, 73);
   font-family: "Source Sans Pro", sans-serif;
 }
+
+.App header {
+  position: relative;
+  display: inline;
+}

@@ -43,7 +43,7 @@
 }
 
 @media (min-width: 600px) {
-  .Delete:hover {
+  .Delete:hover, .DeleteRecipe:hover {
     background-color: rgb(246, 115, 115);
   }
 

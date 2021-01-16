@@ -91,7 +91,11 @@ const EditRecipe = (props) => {
         </Button>
         <label>Method</label>
         <ol>{methodDisplay}</ol>
-        <Button type="button" btnStyle="Add" clickHandler={props.addMethodInput}>
+        <Button
+          type="button"
+          btnStyle="Add"
+          clickHandler={props.addMethodInput}
+        >
           Add
         </Button>
         <Button type="submit" btnStyle="Save">
@@ -100,6 +104,7 @@ const EditRecipe = (props) => {
         <Button
           type="button"
           btnStyle="DeleteRecipe"
+          clickHandler={(e) => props.deleteRecipe(e, index)}
         >
           Delete
         </Button>

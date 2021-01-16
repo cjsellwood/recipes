@@ -151,7 +151,7 @@ const App = () => {
       }
     )
       .then((response) => response.json())
-      .then((data) => console.log("Success", data))
+      .then((data) => console.log("Successfully Added", data))
       .catch((error) => {
         console.log("Error: ", error);
       });
@@ -226,13 +226,48 @@ const App = () => {
       }
     )
       .then((response) => response.json())
-      .then((data) => console.log("Success", data))
+      .then((data) => console.log("Successfully Updated", data))
       .catch((error) => {
         console.log("Error: ", error);
       });
 
     // Redirect to home page
     history.push("/");
+  };
+
+  // Remove recipe from state and database
+  const deleteRecipe = (e, index) => {
+    console.log(e);
+
+    // Delete from firebase database
+    setLoading(true);
+    fetch(
+      `https://recipes-f31ef-default-rtdb.firebaseio.com/recipes/${recipes[index].id}.json`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        // body: JSON.stringify(addedRecipe),
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Successfully Deleted", data);
+
+        // Redirect to home page
+        history.push("/");
+
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log("Error: ", error);
+      });
+
+    // Duplicate recipes
+    const newRecipes = duplicateRecipes(recipes);
+    newRecipes.splice(index, 1);
+    setRecipes(newRecipes);
   };
 
   // #TODO
@@ -294,6 +329,7 @@ const App = () => {
               addMethodInput={addMethodInput}
               saveEditedRecipe={saveEditedRecipe}
               deleteListInput={deleteListInput}
+              deleteRecipe={deleteRecipe}
             />
           )}
         </Route>
