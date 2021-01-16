@@ -1,3 +1,33 @@
-.PositionButtons {
+.ListInput {
+}
+
+.ListInput > div {
   display: inline-flex;
+  width: calc(100% - 25px);
+  align-items: stretch;
+  margin: 5px 0;
+}
+
+.ListInput input {
+  outline: none;
+  font-size: 1.1rem;
+  display: inline;
+  width: 100%;
+}
+
+.ListInput textarea {
+  outline: none;
+  font-size: 1.1rem;
+  display: inline;
+  width: 100%;
+  font-family: inherit;
+  resize: none;
+  min-height: 1.1rem;
+  padding: 5px;
+  line-height: 1.1rem;
+}
+
+.MethodList > div {
+  padding-left: 8px;
+  width: calc(100% - 17px);
 }

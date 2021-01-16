@@ -2,26 +2,57 @@
   cursor: pointer;
   display: block;
   padding: 10px 20px;
-
   color: white;
-  background-color: rgb(238, 85, 85);
   text-decoration: none;
   text-transform: uppercase;
   outline: none;
   border: none;
 }
 
-@media (min-width: 600px) {
-  .Button:hover {
-    background-color: rgb(246, 115, 115);
-  }
-}
-
 .Save {
   margin: 0 auto;
   margin-top: 50px;
+  background-color: rgb(45, 134, 72);
+}
+
+.Delete {
+  background-color: rgb(238, 85, 85);
+  margin-left: 2px;
+  padding: 0 4px;
 }
 
 .Add {
-  margin: 0 auto 0 10px;
+  background-color: rgb(56, 74, 230);
+  margin-right: auto;
+  margin-top: 5px;
+  margin-left: 22px;
+}
+
+.DeleteRecipe {
+  margin: 0 auto;
+  margin-top: 20px;
+  background-color: rgb(238, 85, 85);
+}
+
+.Chevron {
+  height: 100%;
+  padding: 0;
+  margin: 2px;
+  background-color: rgb(56, 74, 230);
+  display: inline-block;
+}
+
+@media (min-width: 600px) {
+  .Delete:hover {
+    background-color: rgb(246, 115, 115);
+  }
+
+  .Add:hover,
+  .Chevron:hover {
+    background-color: rgb(70, 86, 233);
+  }
+
+  .Save:hover {
+    background-color: rgb(56, 163, 88);
+  }
 }

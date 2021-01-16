@@ -1,10 +1,11 @@
 .EditRecipe {
-  color: rgb(240, 240, 240);
-  padding: 20px;
+  width: 100%;
   display: flex;
   justify-content: center;
   flex-direction: column;
   margin: 0 auto;
+  color: rgb(240, 240, 240);
+  padding: 20px;
 }
 
 @media (min-width: 600px) {
@@ -13,9 +14,22 @@
   }
 }
 
-.EditRecipe input,
+.EditRecipe > form > input,
+.EditRecipe > form > label,
+.EditRecipe > form > div > input {
+  font-size: 1.1rem;
+  outline: none;
+  border: none;
+}
+
+.EditRecipe input {
+  padding: 5px 0 5px 5px;
+}
+
 .EditRecipe label {
-  margin: 5px 0;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  font-size: 1.2rem;
 }
 
 .EditRecipe form {
@@ -34,3 +48,16 @@
   list-style-position: inside;
 }
 
+.TimeContainer {
+  display: flex;
+  align-items: center;
+}
+
+.TimeContainer input {
+  width: 100%;
+}
+
+.TimeContainer p {
+  margin-left: 10px;
+  margin-bottom: 3px;
+}

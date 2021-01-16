@@ -63,13 +63,16 @@ const AddRecipe = (props) => {
           placeholder="Enter Category"
         />
         <label>Time</label>
-        <input
-          type="number"
-          name="time"
-          onChange={props.formChange}
-          value={props.time}
-          placeholder="Enter Time"
-        />
+        <div className={classes.TimeContainer}>
+          <input
+            type="number"
+            name="time"
+            onChange={props.formChange}
+            value={props.time}
+            placeholder="Enter Time"
+          />
+          <p>Minutes</p>
+        </div>
         <label>Ingredients</label>
         <ul>{ingredientsDisplay}</ul>
         <Button

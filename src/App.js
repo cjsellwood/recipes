@@ -163,7 +163,6 @@ const App = () => {
   const deleteListInput = (e) => {
     const index = e.target.getAttribute("data-index");
     const key = e.target.getAttribute("data-key");
-    console.log(e);
 
     if (key === "ingredients") {
       const newIngredients = [...ingredients];

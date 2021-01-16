@@ -7,6 +7,8 @@ const Button = (props) => {
       className={[classes.Button, classes[props.btnStyle]].join(" ")}
       type={props.type}
       onClick={props.clickHandler}
+      data-index={props.index}
+      data-key={props.listName}
     >
       {props.children}
     </button>

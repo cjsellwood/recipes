@@ -4,6 +4,7 @@ import classes from "./EditRecipe.module.css";
 
 import ListInput from "../ListInput/ListInput";
 import PageTitle from "../PageTitle/PageTitle";
+import Button from "../Button/Button";
 
 const EditRecipe = (props) => {
   const location = useLocation();
@@ -69,24 +70,39 @@ const EditRecipe = (props) => {
           placeholder="Enter Category"
         />
         <label>Time</label>
-        <input
-          type="text"
-          name="time"
-          value={props.time}
-          onChange={props.formChange}
-          placeholder="Enter Time"
-        />
+        <div className={classes.TimeContainer}>
+          <input
+            type="number"
+            name="time"
+            onChange={props.formChange}
+            value={props.time}
+            placeholder="Enter Time"
+          />
+          <p>Minutes</p>
+        </div>
         <label>Ingredients</label>
         <ul>{ingredientsDisplay}</ul>
-        <button type="button" onClick={props.addIngredientInput}>
+        <Button
+          type="button"
+          btnStyle="Add"
+          clickHandler={props.addIngredientInput}
+        >
           Add
-        </button>
+        </Button>
         <label>Method</label>
         <ol>{methodDisplay}</ol>
-        <button type="button" onClick={props.addMethodInput}>
+        <Button type="button" btnStyle="Add" clickHandler={props.addMethodInput}>
           Add
-        </button>
-        <button type="submit">Save</button>
+        </Button>
+        <Button type="submit" btnStyle="Save">
+          Save
+        </Button>
+        <Button
+          type="button"
+          btnStyle="DeleteRecipe"
+        >
+          Delete
+        </Button>
       </form>
     </div>
   );

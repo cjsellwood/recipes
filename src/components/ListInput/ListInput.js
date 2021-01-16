@@ -1,38 +1,45 @@
-import React from 'react'
+import React, { useEffect, useRef } from "react";
 
 import classes from "./ListInput.module.css";
-import ChevronDown from "../ChevronDown/ChevronDown";
-import ChevronUp from "../ChevronUp/ChevronUp";
+import Button from "../Button/Button";
+import TextareaAutosize from "react-autosize-textarea"
 
 const ListInput = (props) => {
+  const listStyle = [classes.ListInput];
+
+  if (props.listName === "method") {
+    listStyle.push(classes.MethodList);
+  }
+
+  // Resize text area when amount of text changes
+  const textArea = useRef(null);
+
   return (
-    <li>
-      <input
-        type="text"
-        name={props.name}
-        onChange={props.changeHandler}
-        data-index={props.index}
-        value={props.name}
-        autoComplete="off"
-      />
-      <div className={classes.PositionButtons}>
-        <button type="button">
-          <ChevronUp />
-        </button>
-        <button type="button">
-          <ChevronDown />
-        </button>
+    <li className={listStyle.join(" ")}>
+      <div>
+        <TextareaAutosize
+          ref={textArea}
+          rows={1}
+          type="text"
+          name={props.name}
+          onChange={props.changeHandler}
+          data-index={props.index}
+          value={props.name}
+          autoComplete="off"
+        ></TextareaAutosize>
+        <Button
+          type="button"
+          btnStyle="Delete"
+          index={props.index}
+          key={props.listName}
+          listName={props.listName}
+          clickHandler={props.deleteListInput}
+        >
+          Delete
+        </Button>
       </div>
-      <button
-        type="button"
-        data-index={props.index}
-        data-key={props.listName}
-        onClick={props.deleteListInput}
-      >
-        Delete
-      </button>
     </li>
   );
-}
+};
 
-export default ListInput
+export default ListInput;
