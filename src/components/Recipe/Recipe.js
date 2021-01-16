@@ -17,7 +17,7 @@ const Recipe = (props) => {
         <PageTitle>{props.recipes[index].name}</PageTitle>
         <div className={classes.DetailsContainer}>
           <p>{props.recipes[index].category}</p>
-          <p>{props.recipes[index].time} Min</p>
+          <p>{props.recipes[index].time} {props.recipes[index].time !== "" ? "Min" : null}</p>
         </div>
         <h2>Ingredients</h2>
         <ul>

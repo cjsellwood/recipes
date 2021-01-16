@@ -10,7 +10,7 @@ const Recipes = (props) => {
         <h2>{recipe.name}</h2>
         <div className={classes.DetailsContainer}>
           <p>{recipe.category}</p>
-          <p>{recipe.time} Min</p>
+          <p>{recipe.time} {recipe.time !== "" ? "Min" : null}</p>
         </div>
       </Link>
     );

@@ -29,17 +29,20 @@
 
 .Recipe ul {
   list-style: disc;
-  list-style-position: inside;
+  list-style-position: outside;
+  padding-left: 25px;
 }
 
 .Recipe ol {
   list-style: decimal;
-  list-style-position: inside;
+  list-style-position: outside;
+  padding-left: 25px;
 }
 
 .Recipe li {
   font-size: 1.2rem;
   line-height: 1.2;
+  margin: 5px 0;
 }
 
 .Recipe a {

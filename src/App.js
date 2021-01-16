@@ -7,6 +7,7 @@ import React, { useState, useEffect } from "react";
 import Recipe from "./components/Recipe/Recipe";
 import Spinner from "./components/Spinner/Spinner";
 import EditRecipe from "./components/EditRecipe/EditRecipe";
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 
 const App = () => {
   const [name, setName] = useState("");
@@ -245,6 +246,7 @@ const App = () => {
 
   return (
     <div className={classes.App}>
+      <ScrollToTop />
       <header>
         <Nav />
       </header>
