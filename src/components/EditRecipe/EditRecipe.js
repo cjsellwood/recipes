@@ -60,6 +60,7 @@ const EditRecipe = (props) => {
           value={props.name}
           onChange={props.formChange}
           placeholder="Enter Name"
+          required={true}
         />
         <label>Category</label>
         <input
@@ -68,6 +69,7 @@ const EditRecipe = (props) => {
           value={props.category}
           onChange={props.formChange}
           placeholder="Enter Category"
+          required={true}
         />
         <label>Time</label>
         <div className={classes.TimeContainer}>

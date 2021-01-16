@@ -26,6 +26,7 @@ const ListInput = (props) => {
           data-index={props.index}
           value={props.name}
           autoComplete="off"
+          required={true}
         ></TextareaAutosize>
         <Button
           type="button"

@@ -237,8 +237,6 @@ const App = () => {
 
   // Remove recipe from state and database
   const deleteRecipe = (e, index) => {
-    console.log(e);
-
     // Delete from firebase database
     setLoading(true);
     fetch(
@@ -271,11 +269,8 @@ const App = () => {
   };
 
   // #TODO
-  // Allow moving of ingredients and method in add recipe
   // Redux
   // Search maybe
-  // Styling
-  // form validation
 
   // console.log("recipes", recipes);
 
