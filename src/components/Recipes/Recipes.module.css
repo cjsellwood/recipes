@@ -1,3 +1,8 @@
+.RecipesWrapper {
+  position: relative;
+  z-index: 1;
+}
+
 .RecipesContainer {
   padding: 20px;
   color: rgb(240, 240, 240);
@@ -59,4 +64,18 @@
   padding: 5px;
   justify-content: space-between;
   color: rgb(200, 200, 200);
+}
+
+.FilterModal {
+  background-color: rgba(0, 0, 0, 0.459);
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 20;
+}
+
+.FilterWrapper {
+  height: 100%;
 }

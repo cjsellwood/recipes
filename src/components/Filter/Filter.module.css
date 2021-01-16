@@ -1,0 +1,43 @@
+.FilterContainer {
+  background-color: rgb(186, 191, 202);
+  width: 75%;
+  height: 100%;
+  transition: 1s transform;
+  -webkit-transition: 1s transform;
+  -moz-transition: 1s transform;
+  -ms-transition: 1s transform;
+  -o-transition: 1s transform;
+  transform: translateX(-100%);
+  -webkit-transform: translateX(-100%);
+  -moz-transform: translateX(-100%);
+  -ms-transform: translateX(-100%);
+  -o-transform: translateX(-100%);
+  z-index: 30;
+  position: fixed;
+  top: 0;
+}
+
+.Open {
+  transition: 1s transform;
+  -webkit-transition: 1s transform;
+  -moz-transition: 1s transform;
+  -ms-transition: 1s transform;
+  -o-transition: 1s transform;
+  transform: translateX(0%);
+  -webkit-transform: translateX(0%);
+  -moz-transform: translateX(0%);
+  -ms-transform: translateX(0%);
+  -o-transform: translateX(0%);
+}
+
+
+.FilterContainer h3 {
+  padding-top: 70px;
+  font-size: 1.5rem;
+  color: black;
+  text-align: center;
+}
+
+.FilterContainer form {
+  padding: 20px;
+}

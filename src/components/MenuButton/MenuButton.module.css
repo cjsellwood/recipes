@@ -1,0 +1,30 @@
+.MenuButton {
+  position: absolute;
+  top: 12px;
+  left: 30px;
+  border: none;
+  outline: none;
+  background-color: rgb(63, 63, 68);
+  cursor: pointer;
+  z-index: 10;
+  padding: 5px 10px;
+  display: flex;
+  border: 1px solid rgb(179, 179, 179);
+  border-radius: 6px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+}
+
+.MenuButton svg {
+  fill: rgb(255, 255, 255);
+  width: 35px;
+  height: 35px;
+}
+
+@media (min-width: 1000px) {
+  .MenuButton {
+    display: none;
+  }
+}

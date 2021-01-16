@@ -268,6 +268,13 @@ const App = () => {
     setRecipes(newRecipes);
   };
 
+  const [filterOpen, setFilterOpen] = useState(false);
+
+  const toggleFilter = () => {
+    setFilterOpen(!filterOpen);
+    console.log(filterOpen);
+  };
+
   // #TODO
   // Redux
   // Search maybe
@@ -282,7 +289,15 @@ const App = () => {
       </header>
       <Switch>
         <Route exact path="/">
-          {loading ? <Spinner /> : <Recipes recipes={recipes} />}
+          {loading ? (
+            <Spinner />
+          ) : (
+            <Recipes
+              recipes={recipes}
+              toggleFilter={toggleFilter}
+              filterOpen={filterOpen}
+            />
+          )}
         </Route>
         <Route path="/addrecipe">
           {loading ? (

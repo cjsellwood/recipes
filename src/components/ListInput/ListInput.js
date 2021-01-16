@@ -1,8 +1,8 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 
 import classes from "./ListInput.module.css";
 import Button from "../Button/Button";
-import TextareaAutosize from "react-autosize-textarea"
+import TextareaAutosize from "react-autosize-textarea";
 
 const ListInput = (props) => {
   const listStyle = [classes.ListInput];
