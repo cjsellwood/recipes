@@ -1,12 +1,11 @@
 .FilterContainer {
-  background-color: rgb(186, 191, 202);
-  width: 75%;
+  width: min(75%, 300px);
   height: 100%;
-  transition: 1s transform;
-  -webkit-transition: 1s transform;
-  -moz-transition: 1s transform;
-  -ms-transition: 1s transform;
-  -o-transition: 1s transform;
+  transition: 0.4s transform ease-in-out;
+  -webkit-transition: 0.4s transform ease-in-out;
+  -moz-transition: 0.4s transform ease-in-out;
+  -ms-transition: 0.4s transform ease-in-out;
+  -o-transition: 0.4s transform ease-in-out;
   transform: translateX(-100%);
   -webkit-transform: translateX(-100%);
   -moz-transform: translateX(-100%);
@@ -15,14 +14,12 @@
   z-index: 30;
   position: fixed;
   top: 0;
+  color: rgb(240, 240, 240);
+  background-color: rgb(66, 66, 73);
+  border-right: 1px solid black;
 }
 
 .Open {
-  transition: 1s transform;
-  -webkit-transition: 1s transform;
-  -moz-transition: 1s transform;
-  -ms-transition: 1s transform;
-  -o-transition: 1s transform;
   transform: translateX(0%);
   -webkit-transform: translateX(0%);
   -moz-transform: translateX(0%);
@@ -30,14 +27,65 @@
   -o-transform: translateX(0%);
 }
 
-
 .FilterContainer h3 {
   padding-top: 70px;
   font-size: 1.5rem;
   color: black;
   text-align: center;
+  color: rgb(240, 240, 240);
 }
 
 .FilterContainer form {
-  padding: 20px;
+  padding: 20px 5px;
+  margin-top: 20px;
+  color: rgb(240, 240, 240);
+  font-size: 1.3rem;
+}
+
+.FilterContainer label {
+  display: flex;
+  align-items: center;
+  padding: 12px 30px;
+}
+
+.FilterContainer input {
+  margin-right: 15px;
+  display: block;
+  transform: scale(1.5);
+  -webkit-transform: scale(1.5);
+  -moz-transform: scale(1.5);
+  -ms-transform: scale(1.5);
+  -o-transform: scale(1.5);
+}
+
+.formWrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.CloseButton {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  margin: 10px;
+  position: absolute;
+  border: none;
+  outline: none;
+  background-color: rgb(63, 63, 68);
+  cursor: pointer;
+  z-index: 10;
+  padding: 5px 10px;
+  display: flex;
+  border: 1px solid rgb(179, 179, 179);
+  border-radius: 6px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+}
+
+.CloseButton svg {
+  fill: rgb(240, 240, 240);
+  width: 35px;
+  height: 35px;
 }

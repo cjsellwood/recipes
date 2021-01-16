@@ -58,7 +58,7 @@ const Recipes = (props) => {
       <MenuButton toggleFilter={props.toggleFilter} />
       {filter}
       <div className={classes.FilterWrapper}>
-        <Filter filterOpen={props.filterOpen}></Filter>
+        <Filter filterOpen={props.filterOpen} toggleFilter={props.toggleFilter}></Filter>
       </div>
     </div>
   );
