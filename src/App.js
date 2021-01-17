@@ -18,6 +18,16 @@ const App = () => {
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [dataFetched, setDataFetched] = useState(false);
+  const [categories, setCategories] = useState({});
+
+  const updateCategories = (recipesObject) => {
+    // Create object of categories for filtering
+    const newCategories = {};
+    for (let i = 0; i < recipesObject.length; i++) {
+      newCategories[recipesObject[i].category] = true;
+    }
+    setCategories(newCategories);
+  };
 
   useEffect(() => {
     // Retrieve recipes from local storage if stored there
@@ -38,6 +48,7 @@ const App = () => {
           if (response === null) {
             return;
           }
+          // Create recipes array
           for (let key in response) {
             newRecipes.push({ ...response[key] });
           }
@@ -45,6 +56,7 @@ const App = () => {
 
           setLoading(false);
           setDataFetched(true);
+          updateCategories(newRecipes);
         })
         .catch((error) => {
           console.error(error);
@@ -131,8 +143,9 @@ const App = () => {
       id,
     };
 
-    // Duplicate recipes
+    // Duplicate recipes and add new categories
     const newRecipes = duplicateRecipes(recipes);
+    updateCategories(newRecipes);
 
     // Add new recipe and add to firebase
     newRecipes.push(addedRecipe);
@@ -196,6 +209,7 @@ const App = () => {
     setMethod([...recipes[index].method]);
   };
 
+  // Save edited recipe on submit
   const saveEditedRecipe = (e, index) => {
     e.preventDefault();
     const addedRecipe = {
@@ -213,6 +227,7 @@ const App = () => {
     // Replace unedited with new values
     newRecipes.splice(index, 1, addedRecipe);
     setRecipes(newRecipes);
+    updateCategories(newRecipes);
 
     // Add to firebase database
     fetch(
@@ -266,13 +281,20 @@ const App = () => {
     const newRecipes = duplicateRecipes(recipes);
     newRecipes.splice(index, 1);
     setRecipes(newRecipes);
+    updateCategories(newRecipes);
   };
 
+  // Control filter sidebar open and closing
   const [filterOpen, setFilterOpen] = useState(false);
-
   const toggleFilter = () => {
     setFilterOpen(!filterOpen);
-    console.log(filterOpen);
+  };
+
+  // Change checkboxes in filter
+  const changeChecked = (e) => {
+    const newCategories = { ...categories };
+    newCategories[e.target.name] = !newCategories[e.target.name];
+    setCategories(newCategories);
   };
 
   // #TODO
@@ -296,6 +318,8 @@ const App = () => {
               recipes={recipes}
               toggleFilter={toggleFilter}
               filterOpen={filterOpen}
+              categories={categories}
+              changeChecked={changeChecked}
             />
           )}
         </Route>

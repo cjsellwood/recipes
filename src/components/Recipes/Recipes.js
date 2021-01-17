@@ -6,25 +6,29 @@ import MenuButton from "../MenuButton/MenuButton";
 import Filter from "../Filter/Filter";
 
 const Recipes = (props) => {
-  const recipesDisplay = props.recipes.map((recipe, index) => {
-    return (
-      <Link
-        to={`/recipes/${index}`}
-        className={classes.RecipeItem}
-        key={index}
-        name={recipe.name}
-      >
-        <h2>{recipe.name}</h2>
-        <div className={classes.DetailsContainer}>
-          <p>{recipe.category}</p>
-          <p>
-            {recipe.time} {recipe.time !== "" ? "Min" : null}
-          </p>
-        </div>
-      </Link>
-    );
-  });
+  // List of recipes to display with category filter applied
+  const recipesDisplay = props.recipes
+    .filter((recipe) => props.categories[recipe.category])
+    .map((recipe, index) => {
+      return (
+        <Link
+          to={`/recipes/${index}`}
+          className={classes.RecipeItem}
+          key={index}
+          name={recipe.name}
+        >
+          <h2>{recipe.name}</h2>
+          <div className={classes.DetailsContainer}>
+            <p>{recipe.category}</p>
+            <p>
+              {recipe.time} {recipe.time !== "" ? "Min" : null}
+            </p>
+          </div>
+        </Link>
+      );
+    });
 
+  // Add dark background next to filter slide out menu
   const filter = [];
   if (props.filterOpen) {
     filter.push(
@@ -58,7 +62,12 @@ const Recipes = (props) => {
       <MenuButton toggleFilter={props.toggleFilter} />
       {filter}
       <div className={classes.FilterWrapper}>
-        <Filter filterOpen={props.filterOpen} toggleFilter={props.toggleFilter}></Filter>
+        <Filter
+          filterOpen={props.filterOpen}
+          toggleFilter={props.toggleFilter}
+          categories={props.categories}
+          changeChecked={props.changeChecked}
+        ></Filter>
       </div>
     </div>
   );
