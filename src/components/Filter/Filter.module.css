@@ -16,7 +16,17 @@
   top: 0;
   color: rgb(240, 240, 240);
   background-color: rgb(66, 66, 73);
-  border-right: 1px solid black;
+  border-right: 2px solid black;
+}
+
+@media (min-width: 900px) {
+  .FilterContainer {
+    transform: translate(0);
+    -webkit-transform: translate(0);
+    -moz-transform: translate(0);
+    -ms-transform: translate(0);
+    -o-transform: translate(0);
+  }
 }
 
 .Open {
@@ -30,9 +40,12 @@
 .FilterContainer h3 {
   padding-top: 70px;
   font-size: 1.5rem;
-  color: black;
   text-align: center;
   color: rgb(240, 240, 240);
+  text-shadow: 1px 1px 1px rgb(0, 0, 0);
+  text-align: center;
+  font-size: 1.7rem;
+  text-transform: capitalize;
 }
 
 .FilterContainer form {
@@ -88,4 +101,10 @@
   fill: rgb(240, 240, 240);
   width: 35px;
   height: 35px;
+}
+
+@media (min-width: 900px) {
+  .CloseButton {
+    display: none;
+  }
 }

@@ -27,6 +27,11 @@
   }
 }
 
+@media (min-width: 900px) {
+  .RecipesContainer {
+    margin-left: 300px;
+  }
+}
 .RecipeItem {
   text-decoration: none;
   width: 100%;
@@ -78,4 +83,10 @@
 
 .FilterWrapper {
   height: 100%;
+}
+
+@media (min-width: 900px) {
+  .FilterModal {
+    display: none;
+  }
 }
