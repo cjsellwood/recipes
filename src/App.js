@@ -27,7 +27,6 @@ const App = () => {
       newCategories[recipesObject[i].category.toLowerCase()] = true;
     }
     setCategories(newCategories);
-    console.log(newCategories)
   };
 
   useEffect(() => {

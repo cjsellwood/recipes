@@ -23,7 +23,6 @@ const Filter = (props) => {
       </label>
     );
   }
-  console.log(checkboxDisplay);
 
   // Sort alphabetically
   checkboxDisplay.sort((a, b) => {
