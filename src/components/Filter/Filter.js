@@ -8,10 +8,11 @@ const Filter = (props) => {
     filterClasses.push(classes.Open);
   }
 
+  // Display labels with checkboxes for filtering
   const checkboxDisplay = [];
   for (let key in props.categories) {
     checkboxDisplay.push(
-      <label key={key}>
+      <label key={key} name={key}>
         <input
           type="checkbox"
           checked={props.categories[key]}
@@ -22,6 +23,20 @@ const Filter = (props) => {
       </label>
     );
   }
+  console.log(checkboxDisplay);
+
+  // Sort alphabetically
+  checkboxDisplay.sort((a, b) => {
+    const nameA = a.props.name.toLowerCase();
+    const nameB = b.props.name.toLowerCase();
+    if (nameA < nameB) {
+      return -1;
+    }
+    if (nameA > nameB) {
+      return 1;
+    }
+    return 0;
+  });
   return (
     <div className={filterClasses.join(" ")}>
       <button className={classes.CloseButton} onClick={props.toggleFilter}>

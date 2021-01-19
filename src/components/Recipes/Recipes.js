@@ -8,7 +8,8 @@ import Filter from "../Filter/Filter";
 const Recipes = (props) => {
   // List of recipes to display with category filter applied
   const recipesDisplay = props.recipes
-    .filter((recipe) => props.categories[recipe.category])
+    // Filter if category set to true in categories state
+    .filter((recipe) => props.categories[recipe.category.toLowerCase()])
     .map((recipe, index) => {
       return (
         <Link
@@ -42,8 +43,8 @@ const Recipes = (props) => {
 
   // Sort Alphabetically
   recipesDisplay.sort((a, b) => {
-    const nameA = a.props.name.toUpperCase();
-    const nameB = b.props.name.toUpperCase();
+    const nameA = a.props.name.toLowerCase();
+    const nameB = b.props.name.toLowerCase();
     if (nameA < nameB) {
       return -1;
     }

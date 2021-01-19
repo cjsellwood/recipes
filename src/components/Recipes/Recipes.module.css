@@ -71,6 +71,10 @@
   color: rgb(200, 200, 200);
 }
 
+.DetailsContainer p {
+  text-transform: capitalize;
+}
+
 .FilterModal {
   background-color: rgba(0, 0, 0, 0.65);
   width: 100%;

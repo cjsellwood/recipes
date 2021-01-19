@@ -24,9 +24,10 @@ const App = () => {
     // Create object of categories for filtering
     const newCategories = {};
     for (let i = 0; i < recipesObject.length; i++) {
-      newCategories[recipesObject[i].category] = true;
+      newCategories[recipesObject[i].category.toLowerCase()] = true;
     }
     setCategories(newCategories);
+    console.log(newCategories)
   };
 
   useEffect(() => {
@@ -145,11 +146,10 @@ const App = () => {
 
     // Duplicate recipes and add new categories
     const newRecipes = duplicateRecipes(recipes);
-    updateCategories(newRecipes);
 
-    // Add new recipe and add to firebase
+    // Add new recipe
     newRecipes.push(addedRecipe);
-    setRecipes(newRecipes);
+
     // localStorage.setItem("recipes", JSON.stringify(newRecipes));
 
     // Add to firebase database
@@ -164,13 +164,16 @@ const App = () => {
       }
     )
       .then((response) => response.json())
-      .then((data) => console.log("Successfully Added", data))
+      .then((data) => {
+        console.log("Successfully Added", data);
+        setRecipes(newRecipes);
+        updateCategories(newRecipes);
+        // Redirect to home page
+        history.push("/");
+      })
       .catch((error) => {
         console.log("Error: ", error);
       });
-
-    // Redirect to home page
-    history.push("/");
   };
 
   // Delete added step from add recipe form
@@ -226,8 +229,6 @@ const App = () => {
 
     // Replace unedited with new values
     newRecipes.splice(index, 1, addedRecipe);
-    setRecipes(newRecipes);
-    updateCategories(newRecipes);
 
     // Add to firebase database
     fetch(
@@ -241,13 +242,19 @@ const App = () => {
       }
     )
       .then((response) => response.json())
-      .then((data) => console.log("Successfully Updated", data))
+      .then((data) => {
+        console.log("Successfully Updated", data);
+
+          // Set new values
+        setRecipes(newRecipes);
+        updateCategories(newRecipes);
+
+        // Redirect to home page
+        history.push("/");
+      })
       .catch((error) => {
         console.log("Error: ", error);
       });
-
-    // Redirect to home page
-    history.push("/");
   };
 
   // Remove recipe from state and database
