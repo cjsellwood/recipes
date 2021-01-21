@@ -51,7 +51,7 @@ const AddRecipe = (props) => {
           type="text"
           name="name"
           onChange={props.formChange}
-          value={props.name}
+          value={props.details.name}
           placeholder="Enter Name"
           required={true}
         />
@@ -60,7 +60,7 @@ const AddRecipe = (props) => {
           type="text"
           name="category"
           onChange={props.formChange}
-          value={props.category}
+          value={props.details.category}
           placeholder="Enter Category"
           required={true}
         />
@@ -70,7 +70,7 @@ const AddRecipe = (props) => {
             type="number"
             name="time"
             onChange={props.formChange}
-            value={props.time}
+            value={props.details.time}
             placeholder="Enter Time"
           />
           <p>Minutes</p>

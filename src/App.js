@@ -10,9 +10,12 @@ import EditRecipe from "./components/EditRecipe/EditRecipe";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 
 const App = () => {
-  const [name, setName] = useState("");
-  const [time, setTime] = useState("");
-  const [category, setCategory] = useState("");
+  const [details, setDetails] = useState({
+    name: "",
+    category: "",
+    time: "",
+  });
+
   const [ingredients, setIngredients] = useState([""]);
   const [method, setMethod] = useState([""]);
   const [recipes, setRecipes] = useState([]);
@@ -30,12 +33,6 @@ const App = () => {
   };
 
   useEffect(() => {
-    // Retrieve recipes from local storage if stored there
-    // const storedRecipes = localStorage.getItem("recipes");
-    // if (storedRecipes !== null) {
-    //   setRecipes(JSON.parse(storedRecipes));
-    // }
-
     // Retrieve from firebase on first load
     if (!dataFetched) {
       fetch("https://recipes-f31ef-default-rtdb.firebaseio.com/recipes.json")
@@ -69,19 +66,11 @@ const App = () => {
   const formChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-    switch (name) {
-      case "name":
-        setName(value);
-        break;
-      case "category":
-        setCategory(value);
-        break;
-      case "time":
-        setTime(value);
-        break;
-      default:
-        break;
-    }
+    setDetails({
+      ...details,
+      [name]: value,
+    });
+    console.log(details)
   };
 
   // Add new ingredient to list
@@ -134,10 +123,11 @@ const App = () => {
 
     // Set unique id for referencing in other uses
     const id = Date.now();
+    console.log(details);
     const addedRecipe = {
-      name,
-      category,
-      time,
+      name: details.name,
+      category: details.category,
+      time: details.time,
       ingredients,
       method,
       id,
@@ -182,9 +172,7 @@ const App = () => {
 
     if (key === "ingredients") {
       const newIngredients = [...ingredients];
-      console.log(newIngredients);
       newIngredients.splice(index, 1);
-      console.log(newIngredients);
       setIngredients(newIngredients);
     } else {
       const newMethod = [...method];
@@ -195,18 +183,22 @@ const App = () => {
 
   // Reset edit form when first going to add recipe page
   const resetForm = () => {
-    setName("");
-    setCategory("");
-    setTime("");
+    setDetails({
+      name: "",
+      category: "",
+      time: "",
+    });
     setIngredients([""]);
     setMethod([""]);
   };
 
   // Add values to states for form editing from recipes at index of editing
   const editFormFill = (index) => {
-    setName(recipes[index].name);
-    setCategory(recipes[index].category);
-    setTime(recipes[index].time);
+    setDetails({
+      name: recipes[index].name,
+      category: recipes[index].category,
+      time: recipes[index].time,
+    });
     setIngredients([...recipes[index].ingredients]);
     setMethod([...recipes[index].method]);
   };
@@ -215,9 +207,9 @@ const App = () => {
   const saveEditedRecipe = (e, index) => {
     e.preventDefault();
     const addedRecipe = {
-      name,
-      category,
-      time,
+      name: details.name,
+      category: details.category,
+      time: details.time,
       ingredients,
       method,
       id: recipes[index].id,
@@ -244,7 +236,7 @@ const App = () => {
       .then((data) => {
         console.log("Successfully Updated", data);
 
-          // Set new values
+        // Set new values
         setRecipes(newRecipes);
         updateCategories(newRecipes);
 
@@ -334,9 +326,7 @@ const App = () => {
             <Spinner />
           ) : (
             <AddRecipe
-              name={name}
-              category={category}
-              time={time}
+              details={details}
               formChange={formChange}
               ingredients={ingredients}
               ingredientsChange={ingredientsChange}
@@ -357,9 +347,7 @@ const App = () => {
             <EditRecipe
               editFormFill={editFormFill}
               recipes={recipes}
-              name={name}
-              category={category}
-              time={time}
+              details={details}
               formChange={formChange}
               ingredients={ingredients}
               ingredientsChange={ingredientsChange}

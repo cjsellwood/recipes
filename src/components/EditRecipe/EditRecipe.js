@@ -57,7 +57,7 @@ const EditRecipe = (props) => {
         <input
           type="text"
           name="name"
-          value={props.name}
+          value={props.details.name}
           onChange={props.formChange}
           placeholder="Enter Name"
           required={true}
@@ -66,7 +66,7 @@ const EditRecipe = (props) => {
         <input
           type="text"
           name="category"
-          value={props.category}
+          value={props.details.category}
           onChange={props.formChange}
           placeholder="Enter Category"
           required={true}
@@ -77,7 +77,7 @@ const EditRecipe = (props) => {
             type="number"
             name="time"
             onChange={props.formChange}
-            value={props.time}
+            value={props.details.time}
             placeholder="Enter Time"
           />
           <p>Minutes</p>
