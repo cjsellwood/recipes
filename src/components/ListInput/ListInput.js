@@ -3,6 +3,8 @@ import React, { useRef } from "react";
 import classes from "./ListInput.module.css";
 import Button from "../Button/Button";
 import TextareaAutosize from "react-autosize-textarea";
+import { connect } from "react-redux";
+import * as actions from "../../store/actions/recipeForm";
 
 const ListInput = (props) => {
   const listStyle = [classes.ListInput];
@@ -22,7 +24,9 @@ const ListInput = (props) => {
           rows={1}
           type="text"
           name={props.name}
-          onChange={props.changeHandler}
+          onChange={(e) =>
+            props.onSetListInput(props.listName, props.index, e.target.value)
+          }
           data-index={props.index}
           value={props.name}
           autoComplete="off"
@@ -34,7 +38,9 @@ const ListInput = (props) => {
           index={props.index}
           key={props.listName}
           listName={props.listName}
-          clickHandler={props.deleteListInput}
+          clickHandler={() =>
+            props.onRemoveListInput(props.listName, props.index)
+          }
         >
           Delete
         </Button>
@@ -43,4 +49,15 @@ const ListInput = (props) => {
   );
 };
 
-export default ListInput;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onRemoveListInput: (key, index) => {
+      dispatch(actions.removeListInput(key, index));
+    },
+    onSetListInput: (key, index, value) => {
+      dispatch(actions.setListInput(key, index, value));
+    },
+  };
+};
+
+export default connect(null, mapDispatchToProps)(ListInput);

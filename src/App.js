@@ -8,16 +8,10 @@ import Recipe from "./components/Recipe/Recipe";
 import Spinner from "./components/Spinner/Spinner";
 import EditRecipe from "./components/EditRecipe/EditRecipe";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
+import { connect } from "react-redux";
+import * as actions from "./store/actions/recipeForm";
 
-const App = () => {
-  const [details, setDetails] = useState({
-    name: "",
-    category: "",
-    time: "",
-  });
-
-  const [ingredients, setIngredients] = useState([""]);
-  const [method, setMethod] = useState([""]);
+const App = (props) => {
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [dataFetched, setDataFetched] = useState(false);
@@ -32,6 +26,7 @@ const App = () => {
     setCategories(newCategories);
   };
 
+  // Run on first load
   useEffect(() => {
     // Retrieve from firebase on first load
     if (!dataFetched) {
@@ -66,29 +61,7 @@ const App = () => {
   const formChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-    setDetails({
-      ...details,
-      [name]: value,
-    });
-    console.log(details)
-  };
-
-  // Add new ingredient to list
-  const addIngredientInput = () => {
-    setIngredients([...ingredients, ""]);
-  };
-
-  // Change ingredients state based on input from form
-  const ingredientsChange = (e) => {
-    const index = e.target.getAttribute("data-index");
-    const ingredientsCopy = [...ingredients];
-    ingredientsCopy[index] = e.target.value;
-    setIngredients(ingredientsCopy);
-  };
-
-  // Add new method step to list
-  const addMethodInput = () => {
-    setMethod([...method, ""]);
+    props.onSetDetails(name, value);
   };
 
   // Duplicate recipes deeply
@@ -107,14 +80,6 @@ const App = () => {
     return newRecipes;
   };
 
-  // Change ingredients state based on input from form
-  const methodChange = (e) => {
-    const index = e.target.getAttribute("data-index");
-    const ingredientsCopy = [...method];
-    ingredientsCopy[index] = e.target.value;
-    setMethod(ingredientsCopy);
-  };
-
   const history = useHistory();
 
   // Save to state when submitted
@@ -123,23 +88,23 @@ const App = () => {
 
     // Set unique id for referencing in other uses
     const id = Date.now();
-    console.log(details);
+    console.log(props);
+    console.log(props.ingredients);
     const addedRecipe = {
-      name: details.name,
-      category: details.category,
-      time: details.time,
-      ingredients,
-      method,
+      name: props.details.name,
+      category: props.details.category,
+      time: props.details.time,
+      ingredients: props.ingredients,
+      method: props.method,
       id,
     };
+    console.log(addedRecipe);
 
     // Duplicate recipes and add new categories
     const newRecipes = duplicateRecipes(recipes);
 
     // Add new recipe
     newRecipes.push(addedRecipe);
-
-    // localStorage.setItem("recipes", JSON.stringify(newRecipes));
 
     // Add to firebase database
     fetch(
@@ -165,53 +130,29 @@ const App = () => {
       });
   };
 
-  // Delete added step from add recipe form
-  const deleteListInput = (e) => {
-    const index = e.target.getAttribute("data-index");
-    const key = e.target.getAttribute("data-key");
-
-    if (key === "ingredients") {
-      const newIngredients = [...ingredients];
-      newIngredients.splice(index, 1);
-      setIngredients(newIngredients);
-    } else {
-      const newMethod = [...method];
-      newMethod.splice(index, 1);
-      setMethod(newMethod);
-    }
-  };
-
   // Reset edit form when first going to add recipe page
   const resetForm = () => {
-    setDetails({
-      name: "",
-      category: "",
-      time: "",
-    });
-    setIngredients([""]);
-    setMethod([""]);
+    props.onResetRecipeForm();
   };
 
   // Add values to states for form editing from recipes at index of editing
   const editFormFill = (index) => {
-    setDetails({
-      name: recipes[index].name,
-      category: recipes[index].category,
-      time: recipes[index].time,
-    });
-    setIngredients([...recipes[index].ingredients]);
-    setMethod([...recipes[index].method]);
+    props.onSetDetails("name", recipes[index].name);
+    props.onSetDetails("category", recipes[index].category);
+    props.onSetDetails("time", recipes[index].time);
+    props.onReplaceList("ingredients", recipes[index].ingredients);
+    props.onReplaceList("method", recipes[index].method);
   };
 
   // Save edited recipe on submit
   const saveEditedRecipe = (e, index) => {
     e.preventDefault();
     const addedRecipe = {
-      name: details.name,
-      category: details.category,
-      time: details.time,
-      ingredients,
-      method,
+      name: props.details.name,
+      category: props.details.category,
+      time: props.details.time,
+      ingredients: props.ingredients,
+      method: props.method,
       id: recipes[index].id,
     };
 
@@ -300,6 +241,7 @@ const App = () => {
   // Search maybe
 
   // console.log("recipes", recipes);
+  // console.log("Props App", props);
 
   return (
     <div className={classes.App}>
@@ -326,16 +268,8 @@ const App = () => {
             <Spinner />
           ) : (
             <AddRecipe
-              details={details}
               formChange={formChange}
-              ingredients={ingredients}
-              ingredientsChange={ingredientsChange}
-              addIngredientInput={addIngredientInput}
-              method={method}
-              methodChange={methodChange}
-              addMethodInput={addMethodInput}
               saveRecipe={saveRecipe}
-              deleteListInput={deleteListInput}
               resetForm={resetForm}
             />
           )}
@@ -347,16 +281,8 @@ const App = () => {
             <EditRecipe
               editFormFill={editFormFill}
               recipes={recipes}
-              details={details}
               formChange={formChange}
-              ingredients={ingredients}
-              ingredientsChange={ingredientsChange}
-              addIngredientInput={addIngredientInput}
-              method={method}
-              methodChange={methodChange}
-              addMethodInput={addMethodInput}
               saveEditedRecipe={saveEditedRecipe}
-              deleteListInput={deleteListInput}
               deleteRecipe={deleteRecipe}
             />
           )}
@@ -369,4 +295,26 @@ const App = () => {
   );
 };
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    details: state.recipeForm.details,
+    ingredients: state.recipeForm.ingredients,
+    method: state.recipeForm.method,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onSetDetails: (key, value) => {
+      dispatch(actions.setDetails(key, value));
+    },
+    onResetRecipeForm: () => {
+      dispatch(actions.resetRecipeForm());
+    },
+    onReplaceList: (key, array) => {
+      dispatch(actions.replaceList(key, array));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

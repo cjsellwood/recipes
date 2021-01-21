@@ -3,20 +3,23 @@ import classes from "./AddRecipe.module.css";
 import PageTitle from "../PageTitle/PageTitle";
 import ListInput from "../ListInput/ListInput";
 import Button from "../Button/Button";
+import { connect } from "react-redux";
+import * as actions from "../../store/actions/recipeForm";
 
 const AddRecipe = (props) => {
   useEffect(() => {
     props.resetForm();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   const ingredientsDisplay = props.ingredients.map((ingredient, index) => {
     return (
       <ListInput
         key={index}
-        changeHandler={props.ingredientsChange}
+        setListInput={props.setListInput}
         index={index}
         name={ingredient}
-        deleteListInput={props.deleteListInput}
+        removeListInput={props.removeListInput}
         listName="ingredients"
       />
     );
@@ -26,10 +29,10 @@ const AddRecipe = (props) => {
     return (
       <ListInput
         key={index}
-        changeHandler={props.methodChange}
+        setListInput={props.setListInput}
         index={index}
         name={step}
-        deleteListInput={props.deleteListInput}
+        removeListInput={props.removeListInput}
         listName="method"
       />
     );
@@ -80,7 +83,7 @@ const AddRecipe = (props) => {
         <Button
           type="button"
           btnStyle="Add"
-          clickHandler={props.addIngredientInput}
+          clickHandler={() => props.onAddListInput("ingredients")}
         >
           Add
         </Button>
@@ -89,7 +92,7 @@ const AddRecipe = (props) => {
         <Button
           type="button"
           btnStyle="Add"
-          clickHandler={props.addMethodInput}
+          clickHandler={() => props.onAddListInput("method")}
         >
           Add
         </Button>
@@ -101,4 +104,20 @@ const AddRecipe = (props) => {
   );
 };
 
-export default AddRecipe;
+const mapStateToProps = (state) => {
+  return {
+    details: state.recipeForm.details,
+    ingredients: state.recipeForm.ingredients,
+    method: state.recipeForm.method,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onAddListInput: (key) => {
+      dispatch(actions.addListInput(key));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddRecipe);

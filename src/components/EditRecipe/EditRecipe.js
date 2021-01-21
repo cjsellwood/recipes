@@ -5,6 +5,8 @@ import classes from "./EditRecipe.module.css";
 import ListInput from "../ListInput/ListInput";
 import PageTitle from "../PageTitle/PageTitle";
 import Button from "../Button/Button";
+import { connect } from "react-redux";
+import * as actions from "../../store/actions/recipeForm";
 
 const EditRecipe = (props) => {
   const location = useLocation();
@@ -20,10 +22,10 @@ const EditRecipe = (props) => {
     return (
       <ListInput
         key={index}
-        changeHandler={props.ingredientsChange}
+        setListInput={props.setListInput}
         index={index}
         name={ingredient}
-        deleteListInput={props.deleteListInput}
+        removeListInput={props.removeListInput}
         listName="ingredients"
       />
     );
@@ -33,10 +35,10 @@ const EditRecipe = (props) => {
     return (
       <ListInput
         key={index}
-        changeHandler={props.methodChange}
+        setListInput={props.setListInput}
         index={index}
         name={step}
-        deleteListInput={props.deleteListInput}
+        removeListInput={props.removeListInput}
         listName="method"
       />
     );
@@ -87,7 +89,7 @@ const EditRecipe = (props) => {
         <Button
           type="button"
           btnStyle="Add"
-          clickHandler={props.addIngredientInput}
+          clickHandler={() => props.onAddListInput("ingredients")}
         >
           Add
         </Button>
@@ -96,7 +98,7 @@ const EditRecipe = (props) => {
         <Button
           type="button"
           btnStyle="Add"
-          clickHandler={props.addMethodInput}
+          clickHandler={() => props.onAddListInput("method")}
         >
           Add
         </Button>
@@ -115,4 +117,20 @@ const EditRecipe = (props) => {
   );
 };
 
-export default EditRecipe;
+const mapStateToProps = (state) => {
+  return {
+    details: state.recipeForm.details,
+    ingredients: state.recipeForm.ingredients,
+    method: state.recipeForm.method,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onAddListInput: (key) => {
+      dispatch(actions.addListInput(key));
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditRecipe);
