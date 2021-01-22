@@ -6,12 +6,14 @@ import { HashRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import { createStore, combineReducers, compose, applyMiddleware } from "redux";
 import recipeForm from "./store/reducers/recipeForm";
+import recipes from "./store/reducers/recipes"
 import thunk from "redux-thunk"
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
   recipeForm: recipeForm,
+  recipes: recipes,
 });
 
 const store = createStore(

@@ -9,22 +9,11 @@ import Spinner from "./components/Spinner/Spinner";
 import EditRecipe from "./components/EditRecipe/EditRecipe";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 import { connect } from "react-redux";
-import * as actions from "./store/actions/recipeForm";
+import * as actions from "./store/actions/index";
 
 const App = (props) => {
-  const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [dataFetched, setDataFetched] = useState(false);
-  const [categories, setCategories] = useState({});
-
-  const updateCategories = (recipesObject) => {
-    // Create object of categories for filtering
-    const newCategories = {};
-    for (let i = 0; i < recipesObject.length; i++) {
-      newCategories[recipesObject[i].category.toLowerCase()] = true;
-    }
-    setCategories(newCategories);
-  };
 
   // Run on first load
   useEffect(() => {
@@ -44,11 +33,13 @@ const App = (props) => {
           for (let key in response) {
             newRecipes.push({ ...response[key] });
           }
-          setRecipes(newRecipes);
+          // setRecipes(newRecipes);
+          props.onReplaceRecipes(newRecipes);
 
           setLoading(false);
           setDataFetched(true);
-          updateCategories(newRecipes);
+          // updateCategories(newRecipes);
+          props.onUpdateCategories(newRecipes);
         })
         .catch((error) => {
           console.error(error);
@@ -64,22 +55,6 @@ const App = (props) => {
     props.onSetDetails(name, value);
   };
 
-  // Duplicate recipes deeply
-  const duplicateRecipes = (recipes) => {
-    const newRecipes = [];
-    for (let i = 0; i < recipes.length; i++) {
-      const recipeObj = {
-        name: recipes[i].name,
-        category: recipes[i].category,
-        time: recipes[i].time,
-        ingredients: [...recipes[i].ingredients],
-        method: [...recipes[i].method],
-      };
-      newRecipes.push(recipeObj);
-    }
-    return newRecipes;
-  };
-
   const history = useHistory();
 
   // Save to state when submitted
@@ -88,8 +63,6 @@ const App = (props) => {
 
     // Set unique id for referencing in other uses
     const id = Date.now();
-    console.log(props);
-    console.log(props.ingredients);
     const addedRecipe = {
       name: props.details.name,
       category: props.details.category,
@@ -98,13 +71,6 @@ const App = (props) => {
       method: props.method,
       id,
     };
-    console.log(addedRecipe);
-
-    // Duplicate recipes and add new categories
-    const newRecipes = duplicateRecipes(recipes);
-
-    // Add new recipe
-    newRecipes.push(addedRecipe);
 
     // Add to firebase database
     fetch(
@@ -120,8 +86,11 @@ const App = (props) => {
       .then((response) => response.json())
       .then((data) => {
         console.log("Successfully Added", data);
-        setRecipes(newRecipes);
-        updateCategories(newRecipes);
+
+        // Add new recipe and update categories
+        props.onAddRecipe(addedRecipe);
+        props.onUpdateCategories();
+
         // Redirect to home page
         history.push("/");
       })
@@ -130,56 +99,36 @@ const App = (props) => {
       });
   };
 
-  // Reset edit form when first going to add recipe page
-  const resetForm = () => {
-    props.onResetRecipeForm();
-  };
-
-  // Add values to states for form editing from recipes at index of editing
-  const editFormFill = (index) => {
-    props.onSetDetails("name", recipes[index].name);
-    props.onSetDetails("category", recipes[index].category);
-    props.onSetDetails("time", recipes[index].time);
-    props.onReplaceList("ingredients", recipes[index].ingredients);
-    props.onReplaceList("method", recipes[index].method);
-  };
-
   // Save edited recipe on submit
   const saveEditedRecipe = (e, index) => {
     e.preventDefault();
-    const addedRecipe = {
+    const editedRecipe = {
       name: props.details.name,
       category: props.details.category,
       time: props.details.time,
       ingredients: props.ingredients,
       method: props.method,
-      id: recipes[index].id,
+      id: props.recipes[index].id,
     };
-
-    // Duplicate recipes
-    const newRecipes = duplicateRecipes(recipes);
-
-    // Replace unedited with new values
-    newRecipes.splice(index, 1, addedRecipe);
 
     // Add to firebase database
     fetch(
-      `https://recipes-f31ef-default-rtdb.firebaseio.com/recipes/${recipes[index].id}.json`,
+      `https://recipes-f31ef-default-rtdb.firebaseio.com/recipes/${props.recipes[index].id}.json`,
       {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(addedRecipe),
+        body: JSON.stringify(editedRecipe),
       }
     )
       .then((response) => response.json())
       .then((data) => {
         console.log("Successfully Updated", data);
 
-        // Set new values
-        setRecipes(newRecipes);
-        updateCategories(newRecipes);
+        // Save edited recipes and update categories
+        props.onEditRecipe(editedRecipe, index);
+        props.onUpdateCategories();
 
         // Redirect to home page
         history.push("/");
@@ -194,18 +143,21 @@ const App = (props) => {
     // Delete from firebase database
     setLoading(true);
     fetch(
-      `https://recipes-f31ef-default-rtdb.firebaseio.com/recipes/${recipes[index].id}.json`,
+      `https://recipes-f31ef-default-rtdb.firebaseio.com/recipes/${props.recipes[index].id}.json`,
       {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
-        // body: JSON.stringify(addedRecipe),
       }
     )
       .then((response) => response.json())
       .then((data) => {
         console.log("Successfully Deleted", data);
+
+        // Delete recipe and update categories
+        props.onDeleteRecipe(index);
+        props.onUpdateCategories();
 
         // Redirect to home page
         history.push("/");
@@ -215,33 +167,7 @@ const App = (props) => {
       .catch((error) => {
         console.log("Error: ", error);
       });
-
-    // Duplicate recipes
-    const newRecipes = duplicateRecipes(recipes);
-    newRecipes.splice(index, 1);
-    setRecipes(newRecipes);
-    updateCategories(newRecipes);
   };
-
-  // Control filter sidebar open and closing
-  const [filterOpen, setFilterOpen] = useState(false);
-  const toggleFilter = () => {
-    setFilterOpen(!filterOpen);
-  };
-
-  // Change checkboxes in filter
-  const changeChecked = (e) => {
-    const newCategories = { ...categories };
-    newCategories[e.target.name] = !newCategories[e.target.name];
-    setCategories(newCategories);
-  };
-
-  // #TODO
-  // Redux
-  // Search maybe
-
-  // console.log("recipes", recipes);
-  // console.log("Props App", props);
 
   return (
     <div className={classes.App}>
@@ -251,27 +177,13 @@ const App = (props) => {
       </header>
       <Switch>
         <Route exact path="/">
-          {loading ? (
-            <Spinner />
-          ) : (
-            <Recipes
-              recipes={recipes}
-              toggleFilter={toggleFilter}
-              filterOpen={filterOpen}
-              categories={categories}
-              changeChecked={changeChecked}
-            />
-          )}
+          {loading ? <Spinner /> : <Recipes />}
         </Route>
         <Route path="/addrecipe">
           {loading ? (
             <Spinner />
           ) : (
-            <AddRecipe
-              formChange={formChange}
-              saveRecipe={saveRecipe}
-              resetForm={resetForm}
-            />
+            <AddRecipe formChange={formChange} saveRecipe={saveRecipe} />
           )}
         </Route>
         <Route path="/edit/:id">
@@ -279,17 +191,13 @@ const App = (props) => {
             <Spinner />
           ) : (
             <EditRecipe
-              editFormFill={editFormFill}
-              recipes={recipes}
               formChange={formChange}
               saveEditedRecipe={saveEditedRecipe}
               deleteRecipe={deleteRecipe}
             />
           )}
         </Route>
-        <Route path="/:id">
-          {loading ? <Spinner /> : <Recipe recipes={recipes} />}
-        </Route>
+        <Route path="/:id">{loading ? <Spinner /> : <Recipe />}</Route>
       </Switch>
     </div>
   );
@@ -300,6 +208,8 @@ const mapStateToProps = (state) => {
     details: state.recipeForm.details,
     ingredients: state.recipeForm.ingredients,
     method: state.recipeForm.method,
+    categories: state.recipes.categories,
+    recipes: state.recipes.recipes,
   };
 };
 
@@ -308,11 +218,23 @@ const mapDispatchToProps = (dispatch) => {
     onSetDetails: (key, value) => {
       dispatch(actions.setDetails(key, value));
     },
-    onResetRecipeForm: () => {
-      dispatch(actions.resetRecipeForm());
-    },
     onReplaceList: (key, array) => {
       dispatch(actions.replaceList(key, array));
+    },
+    onUpdateCategories: () => {
+      dispatch(actions.updateCategories());
+    },
+    onReplaceRecipes: (newRecipes) => {
+      dispatch(actions.replaceRecipes(newRecipes));
+    },
+    onAddRecipe: (newRecipe) => {
+      dispatch(actions.addRecipe(newRecipe));
+    },
+    onEditRecipe: (editedRecipe, index) => {
+      dispatch(actions.editRecipe(editedRecipe, index));
+    },
+    onDeleteRecipe: (index) => {
+      dispatch(actions.deleteRecipe(index));
     },
   };
 };

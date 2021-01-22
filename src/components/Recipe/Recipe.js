@@ -2,6 +2,7 @@ import React from "react";
 import classes from "./Recipe.module.css";
 import { useLocation, Link } from "react-router-dom";
 import PageTitle from "../PageTitle/PageTitle";
+import { connect } from "react-redux";
 
 const Recipe = (props) => {
   const location = useLocation();
@@ -17,7 +18,10 @@ const Recipe = (props) => {
         <PageTitle>{props.recipes[index].name}</PageTitle>
         <div className={classes.DetailsContainer}>
           <p>{props.recipes[index].category}</p>
-          <p>{props.recipes[index].time} {props.recipes[index].time !== "" ? "Min" : null}</p>
+          <p>
+            {props.recipes[index].time}{" "}
+            {props.recipes[index].time !== "" ? "Min" : null}
+          </p>
         </div>
         <h2>Ingredients</h2>
         <ul>
@@ -37,4 +41,10 @@ const Recipe = (props) => {
   }
 };
 
-export default Recipe;
+const mapStateToProps = (state) => {
+  return {
+    recipes: state.recipes.recipes,
+  };
+};
+
+export default connect(mapStateToProps)(Recipe);

@@ -14,7 +14,12 @@ const EditRecipe = (props) => {
   const index = pathArray[pathArray.length - 1];
 
   useEffect(() => {
-    props.editFormFill(index);
+    // Add values to states for form editing from recipes at index of editing
+    props.onSetDetails("name", props.recipes[index].name);
+    props.onSetDetails("category", props.recipes[index].category);
+    props.onSetDetails("time", props.recipes[index].time);
+    props.onReplaceList("ingredients", props.recipes[index].ingredients);
+    props.onReplaceList("method", props.recipes[index].method);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -122,6 +127,7 @@ const mapStateToProps = (state) => {
     details: state.recipeForm.details,
     ingredients: state.recipeForm.ingredients,
     method: state.recipeForm.method,
+    recipes: state.recipes.recipes,
   };
 };
 
@@ -129,6 +135,12 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onAddListInput: (key) => {
       dispatch(actions.addListInput(key));
+    },
+    onSetDetails: (key, value) => {
+      dispatch(actions.setDetails(key, value));
+    },
+    onReplaceList: (key, array) => {
+      dispatch(actions.replaceList(key, array));
     },
   };
 };

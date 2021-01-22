@@ -7,8 +7,9 @@ import { connect } from "react-redux";
 import * as actions from "../../store/actions/recipeForm";
 
 const AddRecipe = (props) => {
+    // Reset edit form when first going to add recipe page
   useEffect(() => {
-    props.resetForm();
+    props.onResetRecipeForm();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -116,6 +117,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onAddListInput: (key) => {
       dispatch(actions.addListInput(key));
+    },
+    onResetRecipeForm: () => {
+      dispatch(actions.resetRecipeForm());
     },
   };
 };
