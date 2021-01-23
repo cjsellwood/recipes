@@ -94,6 +94,7 @@ const EditRecipe = (props) => {
         <Button
           type="button"
           btnStyle="Add"
+          ariaLabel="Add Ingredient"
           clickHandler={() => props.onAddListInput("ingredients")}
         >
           Add
@@ -104,16 +105,18 @@ const EditRecipe = (props) => {
           type="button"
           btnStyle="Add"
           clickHandler={() => props.onAddListInput("method")}
+          ariaLabel="Add Method Step"
         >
           Add
         </Button>
-        <Button type="submit" btnStyle="Save">
+        <Button type="submit" btnStyle="Save" ariaLabel="Save Recipe">
           Save
         </Button>
         <Button
           type="button"
           btnStyle="DeleteRecipe"
           clickHandler={(e) => props.deleteRecipe(e, index)}
+          ariaLabel="Delete Recipe"
         >
           Delete
         </Button>

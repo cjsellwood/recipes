@@ -41,6 +41,7 @@ const ListInput = (props) => {
           clickHandler={() =>
             props.onRemoveListInput(props.listName, props.index)
           }
+          ariaLabel="Delete List Input"
         >
           Delete
         </Button>

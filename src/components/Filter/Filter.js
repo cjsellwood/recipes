@@ -38,7 +38,11 @@ const Filter = (props) => {
   });
   return (
     <div className={filterClasses.join(" ")}>
-      <button className={classes.CloseButton} onClick={props.toggleFilter}>
+      <button
+        className={classes.CloseButton}
+        onClick={props.toggleFilter}
+        aria-label="Close Menu"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"

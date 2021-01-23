@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import * as actions from "../../store/actions/recipeForm";
 
 const AddRecipe = (props) => {
-    // Reset edit form when first going to add recipe page
+  // Reset edit form when first going to add recipe page
   useEffect(() => {
     props.onResetRecipeForm();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -85,6 +85,7 @@ const AddRecipe = (props) => {
           type="button"
           btnStyle="Add"
           clickHandler={() => props.onAddListInput("ingredients")}
+          ariaLabel="Add Ingredient"
         >
           Add
         </Button>
@@ -94,10 +95,11 @@ const AddRecipe = (props) => {
           type="button"
           btnStyle="Add"
           clickHandler={() => props.onAddListInput("method")}
+          ariaLabel="Add Method Step"
         >
           Add
         </Button>
-        <Button type="submit" btnStyle="Save">
+        <Button type="submit" btnStyle="Save" ariaLabel="Save Recipe">
           Save
         </Button>
       </form>

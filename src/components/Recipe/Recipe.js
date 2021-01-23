@@ -35,7 +35,7 @@ const Recipe = (props) => {
             <li key={index}>{step}</li>
           ))}
         </ol>
-        <Link to={`/edit/${index}`}>Edit</Link>
+        <Link to={`/edit/${index}`} aria-label="Edit">Edit</Link>
       </section>
     );
   }

@@ -1,13 +1,15 @@
-import classes from "./App.module.css";
-import Nav from "./components/Nav/Nav";
+import React, { useEffect } from "react";
 import { Switch, Route, useHistory } from "react-router-dom";
+import classes from "./App.module.css";
+
+import Nav from "./components/Nav/Nav";
 import Recipes from "./components/Recipes/Recipes";
 import AddRecipe from "./components/AddRecipe/AddRecipe";
-import React, { useEffect } from "react";
+import EditRecipe from "./components/EditRecipe/EditRecipe";
 import Recipe from "./components/Recipe/Recipe";
 import Spinner from "./components/Spinner/Spinner";
-import EditRecipe from "./components/EditRecipe/EditRecipe";
 import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
+
 import { connect } from "react-redux";
 import * as actions from "./store/actions/index";
 

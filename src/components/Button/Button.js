@@ -9,6 +9,7 @@ const Button = (props) => {
       onClick={props.clickHandler}
       data-index={props.index}
       data-key={props.listName}
+      aria-label={props.ariaLabel}
     >
       {props.children}
     </button>

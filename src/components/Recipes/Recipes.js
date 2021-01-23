@@ -75,7 +75,7 @@ const Recipes = (props) => {
         <PageTitle>Recipes</PageTitle>
         <div>{recipesDisplay}</div>
       </section>
-      <MenuButton toggleFilter={toggleFilter} />
+      <MenuButton toggleFilter={toggleFilter} aria={"Open Menu"}/>
       {filter}
       <div className={classes.FilterWrapper}>
         <Filter

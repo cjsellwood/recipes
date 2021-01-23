@@ -7,6 +7,7 @@ const MenuButton = (props) => {
       className={classes.MenuButton}
       onClick={props.toggleFilter}
       type="button"
+      aria-label={props.aria}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
