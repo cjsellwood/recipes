@@ -12,3 +12,12 @@ export const REPLACE_RECIPES = "REPLACE_RECIPES";
 export const ADD_RECIPE = "ADD_RECIPE";
 export const EDIT_RECIPE = "EDIT_RECIPE";
 export const DELETE_RECIPE = "DELETE_RECIPE";
+
+export const FETCH_RECIPES = "FETCH_RECIPES";
+export const STORE_RECIPE = "STORE_RECIPE";
+export const EDIT_STORED_RECIPE = "EDIT_STORED_RECIPE";
+export const DELETE_STORED_RECIPE = "DELETE_STORED_RECIPE";
+
+export const LOADING_ON = "LOADING_ON";
+export const LOADING_OFF = "LOADING_OFF";
+export const DATA_FETCHED = "DATA_FETCHED";

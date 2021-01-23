@@ -3,6 +3,8 @@ import * as actionTypes from "../actions/actionTypes";
 const initialState = {
   recipes: [],
   categories: [],
+  dataFetched: false,
+  loading: true,
 };
 
 // Create new categories from stored recipes
@@ -23,8 +25,8 @@ const toggleCategory = (state, action) => {
     ...state,
     categories: {
       ...state.categories,
-      [action.name]: !state.categories[action.name]
-    }
+      [action.name]: !state.categories[action.name],
+    },
   };
 };
 
@@ -80,6 +82,27 @@ const deleteRecipe = (state, action) => {
   };
 };
 
+const loadingOff = (state, action) => {
+  return {
+    ...state,
+    loading: false,
+  };
+};
+
+const loadingOn = (state, action) => {
+  return {
+    ...state,
+    loading: true,
+  };
+};
+
+const dataFetched = (state, action) => {
+  return {
+    ...state,
+    dataFetched: true,
+  };
+};
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.UPDATE_CATEGORIES:
@@ -94,6 +117,12 @@ const reducer = (state = initialState, action) => {
       return editRecipe(state, action);
     case actionTypes.DELETE_RECIPE:
       return deleteRecipe(state, action);
+    case actionTypes.LOADING_OFF:
+      return loadingOff(state, action);
+    case actionTypes.LOADING_ON:
+      return loadingOn(state, action);
+    case actionTypes.DATA_FETCHED:
+      return dataFetched(state, action);
     default:
       return state;
   }
